@@ -113,10 +113,14 @@ nav ul li {
 }
 
 /*Additionals section*/
-.reviews-title { 
+.reviews-title, .upgrades-title { 
   font-family: 'Kanit', 'sans-serif';
   font-size: 2rem;
   padding: 1rem;
+}
+
+.upgrades-title {
+  grid-column: 1/3;
 }
 
 .reviews-list li {
@@ -150,7 +154,6 @@ nav ul li {
 .upgrades div h4 {
   font-family: 'Work Sans', 'sans-serif';
   font-size: 1.2rem;
-  color: #4C96D7;
   padding: 1px;
   margin: 0 auto;
   text-align: center;
@@ -179,5 +182,17 @@ body {
   margin: 1rem;
   max-width: 400px;
 }
+
+.additionals {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.upgrades {
+  order: -1;
+}
+
+
 
 }

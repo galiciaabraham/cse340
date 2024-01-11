@@ -135,6 +135,7 @@ nav ul li {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 5px;
+  margin: 1rem;
 }
 
 .upgrade-picture {
@@ -143,7 +144,6 @@ nav ul li {
   padding: 0.5rem;
   width: 90%;
   height: 70%;
-  box-sizing: content-box;
 }
 
 .upgrades div img {
@@ -162,6 +162,10 @@ nav ul li {
   color: black;
   text-decoration: underline;
 
+}
+
+div.upgrades div {
+  margin: 1rem;
 }
 
 

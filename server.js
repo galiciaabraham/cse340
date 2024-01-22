@@ -12,6 +12,7 @@ const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const utilities = require("./utilities")
 
 
 /* ***********************
@@ -30,6 +31,23 @@ app.use(static)
 //Index route
 app.get("/", baseController.buildHome)
 app.use("/inv", inventoryRoute)
+app.use(async (req, res, next) => {
+  next({status: 404, message: "Sorry! This page got lost... We're still working on finding it..."})
+})
+
+/* ***********************
+* Express Error Handler
+* Place after all other middleware
+*************************/
+app.use(async (err, req, res, next) => {
+  let nav = await utilities.getNav()
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+  res.render("errors/error", {
+    title:err.status || 'Server Error',
+    message: err.message,
+    nav
+  })
+})
 
 /* ***********************
  * Local Server Information

@@ -202,8 +202,6 @@ div.upgrades div {
 
 .namePrice a {
   display: block;
-  text-decoration: none;
-  color:black
 }
 .namePrice h2 {
   font-family: 'Kanit', 'sans-serif';

@@ -29,7 +29,7 @@ app.set("layout", "./layouts/layout") //not at views root
 app.use(static)
 
 //Index route
-app.get("/", baseController.buildHome)
+app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
 app.use(async (req, res, next) => {
   next({status: 404, message: "Sorry! This page got lost... We're still working on finding it..."})
@@ -42,9 +42,10 @@ app.use(async (req, res, next) => {
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+  if(err.status == 404) { message = err.message} else {message = 'Oh no! I crashed, maybe try a different route?'}
   res.render("errors/error", {
     title:err.status || 'Server Error',
-    message: err.message,
+    message,
     nav
   })
 })

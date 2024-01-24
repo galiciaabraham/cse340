@@ -22,7 +22,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
 invCont.buildDetailsPage = async function (req, res, next) {
     const product_id = req.params.invId
     const data = await invModel.getCarDetailsById(product_id)
-    console.log(data)//For testing only...
+    //console.log(data)//For testing only...
     const grid = await utilities.buildDetailsGrid(data)
     let nav = await utilities.getNav()
     const className = `${data[0].inv_year} ${data[0].inv_make} ${data[0].inv_model}`

@@ -216,6 +216,62 @@ div.upgrades div {
   padding-bottom: 10px;
 }
 
+/*Details Page styling*/
+.details-page-title {
+  font-family: 'Kanit', 'sans-serif';
+  margin: 1rem;
+  font-size: 2.5rem;
+}
+
+.details-outer-box {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.car-picture {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.car-detail-name {
+  font-family: 'Kanit', 'sans-serif';
+  margin: 1rem;
+  font-size: 2rem;
+}
+
+.price {
+  display: block;
+  margin:1rem;
+  padding: 1rem;
+  font-family: 'Work Sans','sans-serif';
+  font-size: 1.5rem;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.desc-text {
+  padding: 1rem 0;
+  margin: 1rem;
+  font-family: 'Work Sans','sans-serif';
+  font-size: 1.5rem;
+}
+
+.color {
+  display: block;
+  margin: 1rem;
+  padding: 1rem;
+  font-family: 'Work Sans','sans-serif';
+  font-size: 1.5rem;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.mileage {
+  display: block;
+  padding: 1rem 0;
+  margin: 1rem;
+  font-family: 'Work Sans','sans-serif';
+  font-size: 1.5rem;
+}
 /*LARGE VIEW STYLING*/
 
 @media screen and (min-width: 700px) {
@@ -258,6 +314,19 @@ body {
   margin: 1rem;
   gap: 1rem;
   padding: 0;
+}
+
+.details-outer-box{
+  grid-template-columns: 1fr 1fr;
+  margin: 2rem;
+}
+
+.car-picture {
+  grid-column: 1/2;
+}
+
+.details-inner-box {
+  grid-column: 2/3;
 }
 
 }

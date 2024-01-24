@@ -42,9 +42,15 @@ app.use(async (req, res, next) => {
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404) { message = err.message} else {message = 'Oh no! I crashed, maybe try a different route?'}
+  if(err.status == 404) { 
+    message = err.message
+  } else if (err.status == 500) {
+    message = 'This is a 500 error, you did it! '
+  } else {
+    message = 'Oh no! I crashed, maybe try a different route?'}
+
   res.render("errors/error", {
-    title:err.status || 'Server Error',
+    title: err.status || 'Server Error',
     message,
     nav
   })

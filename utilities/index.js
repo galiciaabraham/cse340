@@ -33,6 +33,22 @@ Util.buildClassificationGrid = async function(data){
         return grid
     }
 
+Util.buildDetailsGrid = async function (dataObj) {
+    let grid = ''
+    dataObj.forEach(data => {
+    grid =`
+    <div class="details-box">
+    <img class="car-picture" src="${data.inv_image}" alt="Image of ${data.inv_make} ${data.inv_model} on CSE Motors">
+    <h2 class="car-detail-name">${data.inv_make} ${data.inv_model} Details</h2>
+    <span class="price"><b>Price:</b> ${new Intl.NumberFormat('en-US',{style: 'currency', currency: 'USD'}).format(data.inv_price)}</span>
+    <p class="desc-text"><b>Description:</b> ${data.inv_description}</p>
+    <span class="color"><b>Color:</b> ${data.inv_color}</span>
+    <span class="mileage"><b>Miles:</b> ${new Intl.NumberFormat('en-US').format(data.inv_miles)}</span>
+    </div>`         
+    });
+    return grid
+}
+
 /*
 Constructs the nav HTML unordered list
 */

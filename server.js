@@ -13,6 +13,7 @@ const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const accountRoute = require("./routes/accountRoute")
+const errorRoute = require("./routes/errorRoute")
 const utilities = require("./utilities")
 const session = require("express-session")
 const pool = require("./database/")
@@ -55,6 +56,7 @@ app.use(static)
 app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
 app.use("/account", accountRoute)
+app.use("/error", errorRoute)
 app.use(async (req, res, next) => {
   next({status: 404, message: "Sorry! This page got lost... We're still working on finding it..."})
 })
@@ -66,10 +68,8 @@ app.use(async (req, res, next) => {
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404) { 
+  if(err.status == 404 || err.status == 500) { 
     message = err.message
-  } else if (err.status == 500) {
-    message = 'This is a 500 error, you did it! '
   } else {
     message = 'Oh no! I crashed, maybe try a different route?'}
 

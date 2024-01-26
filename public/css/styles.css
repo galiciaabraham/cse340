@@ -283,6 +283,44 @@ footer p {
   padding: 1rem;
   border: 3px solid white
 }
+
+footer a {
+  display: block;
+  background-color: black;
+  color: white;
+  margin: 0;
+  padding: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+
+}
+
+/*Error page styling*/
+.error-page-title {
+  font-family: 'Tektur', 'sans-serif';
+  margin: 1rem;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.error-box {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 2rem;
+}
+
+.error-text {
+  font-size: 2rem;
+  font-family: 'Work Sans', 'sans-serif';
+  margin: 1rem;
+  text-align: center;
+}
+
+.error-image {
+  display: block;
+  margin: 0 auto;
+  width: 70%;
+}
+
 /*LARGE VIEW STYLING*/
 
 @media screen and (min-width: 700px) {

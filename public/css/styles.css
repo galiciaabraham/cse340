@@ -399,6 +399,17 @@ form p {
 .login, .register {
   color: white;
 }
+
+#ShowPwdBtn {
+  padding: 5px;
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+
 /*LARGE VIEW STYLING*/
 
 @media screen and (min-width: 700px) {
@@ -466,6 +477,9 @@ body {
   min-width: 300px;
   margin:  auto;
 }
-
+#ShowPwdBtn:hover {
+  background-color: black;
+  color: white;
+}
 
 }

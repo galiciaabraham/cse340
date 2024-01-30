@@ -72,6 +72,21 @@ Util.getNav = async function (req, res, next){
     return list
 }
 
+/*Util.passwordButton = async function () {
+    const pswdBtn = document.querySelector("#ShowPswdBtn");
+    pswdBtn.addEventListener("click", function() {
+    const pswdInput = document.getElementById("pword");
+    const type = pswdInput.getAttribute("type");
+    if (type == "password") {
+        pswdInput.setAttribute("type", "text");
+        pswdBtn.innerHTML = "Hide Password";
+    } else {
+        pswdInput.setAttribute("type", "password");
+        pswdBtn.innerHTML = "Show Password";
+    }
+});
+}*/
+
 /* 
 Middleware For Handling Errors
 Wrap other function in this for 

@@ -19,11 +19,31 @@
             </label>
             <label for="account_password">
                 Password:
-                <input type="password" name="account_password" required>
+                <input type="password" name="account_password"  id="pword" required>
             </label>
+            <span id="ShowPswBtn">Show Password</span>
             <p>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character(*, &, $, %, #, @, !)</p>
             <button type="submit" class="register-button">Register</button>
         </form>
         <p class="registered">Already have an account? <a class="login" href="/account/login">Login</a></p>
     </div>
 </div>
+
+<script defer>
+    passwordButton = function () {
+    const pswdBtn = document.querySelector("#ShowPdwBtn");
+    pswdBtn.addEventListener("click", function() {
+    const pswdInput = document.getElementById("pword");
+    const type = pswdInput.getAttribute("type");
+    if (type == "password") {
+        pswdInput.setAttribute("type", "text");
+        pswdBtn.innerHTML = "Hide Password";
+    } else {
+        pswdInput.setAttribute("type", "password");
+        pswdBtn.innerHTML = "Show Password";
+    }
+});
+}
+
+passwordButton();
+</script>

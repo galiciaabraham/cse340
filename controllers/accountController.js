@@ -11,5 +11,13 @@ login.buildLogin = async function (req, res, next) {
       nav,
     })
   }
+
+login.buildRegistration = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("account/register", {
+    title: "Register",
+    nav,
+  })
+}
   
   module.exports = login

@@ -322,13 +322,13 @@ footer a {
 }
 
 /*Login Page style*/
-.login-page-title {
+.login-page-title, .registration-page-title {
   margin: 1rem;
   font-family: 'Kanit', 'sans-serif';
   font-size: 2rem;
 }
 
-.login-box {
+.login-box, .register-box {
   margin: 0 auto;
   background-color: rgb(48, 93, 135);
   border-radius: 5px;
@@ -347,10 +347,11 @@ label {
   font-family: 'Work Sans', 'sans-serif';
   margin: 1rem;
   color: white;
+  width: 80%;
 }
 
 input {
-  width: 80%;
+  width: 100%;
   height: 2rem;
   font-size: 1rem;
   font-family: 'Work Sans', 'sans-serif';
@@ -363,7 +364,7 @@ form p {
   color: white;  
 }
 
-.login-box p {
+.login-box p, .register-box p {
   font-size: 1rem;
   font-family: 'Work Sans', 'sans-serif';
   margin: 1rem;
@@ -371,13 +372,13 @@ form p {
   text-align: justify;
 }
 
-.login-box a {
+.login-box a, .register-box p {
   font-size: 1rem;
   font-family: 'Work Sans', 'sans-serif';
   color: white;
 }
 
-.login-button {
+.login-button, .register-button {
   height: 2rem;
   font-size: 1rem;
   font-family: 'Work Sans', 'sans-serif';
@@ -387,12 +388,16 @@ form p {
   border: 2px solid black;
 }
 
-.no-registration {
+.no-registration, .registered {
   padding: 1rem;
 }
 
-.login-wrapper {
+.login-wrapper, .register-wrapper {
   margin: 1rem;
+}
+
+.login, .register {
+  color: white;
 }
 /*LARGE VIEW STYLING*/
 
@@ -451,12 +456,12 @@ body {
   grid-column: 2/3;
 }
 
-.login-button:hover {
+.login-button:hover, .register-button:hover {
   background-color: black;
   color: white;
 }
 
-.login-box {
+.login-box, .register-box {
   width: 50%;
   min-width: 300px;
   margin:  auto;

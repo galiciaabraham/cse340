@@ -1,0 +1,29 @@
+<h1 class="registration-page-title"><%= title %></h1>
+<%- messages() %>
+<div class="registrer-wrapper">
+    <div class="register-box">
+        <form action="submit">
+            <p>All fields are required</p>
+            <hr>
+            <label for="account_firstname">
+                First Name:
+                <input type="fname" name="account_firstname" required>
+            </label>
+            <label for="account_lastname">
+                Last Name:
+                <input type="lname" name="account_lastname" required>
+            </label>
+            <label for="account_email">
+                Email:
+                <input type="email" name="account_email" required>
+            </label>
+            <label for="account_password">
+                Password:
+                <input type="password" name="account_password" required>
+            </label>
+            <p>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character(*, &, $, %, #, @, !)</p>
+            <button type="submit" class="register-button">Register</button>
+        </form>
+        <p class="registered">Already have an account? <a class="login" href="/account/login">Login</a></p>
+    </div>
+</div>

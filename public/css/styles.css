@@ -321,6 +321,79 @@ footer a {
   width: 70%;
 }
 
+/*Login Page style*/
+.login-page-title {
+  margin: 1rem;
+  font-family: 'Kanit', 'sans-serif';
+  font-size: 2rem;
+}
+
+.login-box {
+  margin: 0 auto;
+  background-color: rgb(48, 93, 135);
+  border-radius: 5px;
+  border: 5px solid black;
+  max-width: 500px;
+
+}
+
+form {
+  margin: 2rem;
+}
+
+label {
+  display: block;
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+  margin: 1rem;
+  color: white;
+}
+
+input {
+  width: 80%;
+  height: 2rem;
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+}
+
+form p {
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+  margin: 1rem;
+  color: white;  
+}
+
+.login-box p {
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+  margin: 1rem;
+  color: white;
+  text-align: justify;
+}
+
+.login-box a {
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+  color: white;
+}
+
+.login-button {
+  height: 2rem;
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+
+.no-registration {
+  padding: 1rem;
+}
+
+.login-wrapper {
+  margin: 1rem;
+}
 /*LARGE VIEW STYLING*/
 
 @media screen and (min-width: 700px) {
@@ -377,5 +450,17 @@ body {
 .details-inner-box {
   grid-column: 2/3;
 }
+
+.login-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.login-box {
+  width: 50%;
+  min-width: 300px;
+  margin:  auto;
+}
+
 
 }

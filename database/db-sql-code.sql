@@ -242,3 +242,45 @@ UPDATE public.inventory
 SET inv_image = REPLACE(inv_image, '/images/','/images/vehicles/'), 
 inv_thumbnail = REPLACE(inv_thumbnail, '/images/','/images/vehicles/');
 SELECT * FROM public.inventory;
+
+-- patch the image and thumbnail columns to match filenames
+UPDATE public.inventory
+SET
+    inv_image = REPLACE(
+        REPLACE(
+            REPLACE(
+                REPLACE(
+                    REPLACE(
+                        REPLACE(
+                            REPLACE(
+                                REPLACE(
+                                    REPLACE(
+                                        REPLACE(inv_image, '/fbi', '/survan'),
+                                    '/bat', '/batmobile'),
+                                '/dog', '/dog-car'),
+                            '/monster', '/monster-truck'),
+                        '/mm', '/mystery-van'),
+                    '/jeep-wrangler', '/wrangler'),
+                '/lambo-Adve', '/adventador'),
+            '/ms', '/mechanic'),
+        '/ford-modelt', '/model-t'),
+    '/crown-vic', '/crwn-vic'),
+    inv_thumbnail = REPLACE(
+        REPLACE(
+            REPLACE(
+                REPLACE(
+                    REPLACE(
+                        REPLACE(
+                            REPLACE(
+                                REPLACE(
+                                    REPLACE(
+                                        REPLACE(inv_thumbnail, '/fbi', '/survan'),
+                                    '/bat', '/batmobile'),
+                                '/dog', '/dog-car'),
+                            '/monster', '/monster-truck'),
+                        '/mm', '/mystery-van'),
+                    '/jeep-wrangler', '/wrangler'),
+                '/lambo-Adve', '/adventador'),
+            '/ms', '/mechanic'),
+        '/ford-modelt', '/model-t'),
+    '/crown-vic', '/crwn-vic');

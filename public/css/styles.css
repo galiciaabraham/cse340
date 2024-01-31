@@ -371,6 +371,14 @@ input {
   font-family: 'Work Sans', 'sans-serif';
 }
 
+input:required, input:required:invalid {
+  border-left: red solid 5px;
+}
+
+input:required:valid {
+  border-left: green solid 5px;
+}
+
 form p {
   font-size: 1rem;
   font-family: 'Work Sans', 'sans-serif';
@@ -423,6 +431,7 @@ form p {
   border-radius: 5px;
   border: 2px solid black;
 }
+
 
 /*LARGE VIEW STYLING*/
 

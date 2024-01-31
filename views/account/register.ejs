@@ -1,5 +1,11 @@
 <h1 class="registration-page-title"><%= title %></h1>
-<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
 <div class="registrer-wrapper">
     <div class="register-box">
         <form action="/account/register" method="post">
@@ -21,7 +27,7 @@
                 Password:
                 <input type="password" name="account_password"  id="pword" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
             </label>
-            <span id="ShowPswBtn">Show Password</span>
+            <!-- <span id="ShowPswBtn">Show Password</span> -->
             <p>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character(*, &, $, %, #, @, !)</p>
             <button type="submit" class="register-button">Register</button>
         </form>

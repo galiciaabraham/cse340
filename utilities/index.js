@@ -72,7 +72,7 @@ Util.getNav = async function (req, res, next){
     return list
 }
 
-/*Util.passwordButton = async function () {
+Util.passwordButton = async function () {
     const pswdBtn = document.querySelector("#ShowPswdBtn");
     pswdBtn.addEventListener("click", function() {
     const pswdInput = document.getElementById("pword");
@@ -85,7 +85,7 @@ Util.getNav = async function (req, res, next){
         pswdBtn.innerHTML = "Show Password";
     }
 });
-}*/
+}
 
 /* 
 Middleware For Handling Errors

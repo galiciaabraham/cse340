@@ -183,6 +183,17 @@ div.upgrades div {
   color: white;
 }
 
+.notice {
+  padding: none;
+}
+.notice li {
+  list-style: none;
+  color: rgba(255, 0, 0, 0.611);
+  font-family: 'Work Sans','sans-serif';
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+
 /*Classification pages styling*/
 .classification-page-title {
   margin: 1rem;

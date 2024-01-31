@@ -169,6 +169,20 @@ div.upgrades div {
   margin: 1rem;
 }
 
+/*Messages styling*/
+#messages ul {
+  padding: 0;
+}
+#messages ul li {
+  display: block;
+  font-family: 'Work Sans','sans-serif';
+  font-size: 2rem;
+  text-align: center;
+  padding: 10px;
+  background-color: rgb(48, 93, 135) ;
+  color: white;
+}
+
 /*Classification pages styling*/
 .classification-page-title {
   margin: 1rem;

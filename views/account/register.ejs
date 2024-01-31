@@ -2,7 +2,7 @@
 <%- messages() %>
 <div class="registrer-wrapper">
     <div class="register-box">
-        <form action="submit">
+        <form action="/account/register" method="post">
             <p>All fields are required</p>
             <hr>
             <label for="account_firstname">
@@ -28,22 +28,3 @@
         <p class="registered">Already have an account? <a class="login" href="/account/login">Login</a></p>
     </div>
 </div>
-
-<script defer>
-    passwordButton = function () {
-    const pswdBtn = document.querySelector("#ShowPdwBtn");
-    pswdBtn.addEventListener("click", function() {
-    const pswdInput = document.getElementById("pword");
-    const type = pswdInput.getAttribute("type");
-    if (type == "password") {
-        pswdInput.setAttribute("type", "text");
-        pswdBtn.innerHTML = "Hide Password";
-    } else {
-        pswdInput.setAttribute("type", "password");
-        pswdBtn.innerHTML = "Show Password";
-    }
-});
-}
-
-passwordButton();
-</script>

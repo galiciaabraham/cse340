@@ -12,5 +12,31 @@ async function registerAccount(account_firstname, account_lastname, account_emai
       return error.message
     }
   }
+  
+/*
+Check for existing email
+ */
+  async function checkExistingEmail(account_email) {
+    try {
+      const sql = "SELECT * FROM account WHERE account_email = $1"
+      const email = await pool.query(sql, [account_email])
+      return email.rowCount
+    } catch (error) {
+      return error.message
+    }
+  }
 
-  module.exports = {registerAccount}
+  // async function checkLoginEmail(account_email) {
+  //   try {
+  //     const sql = "SELECT * FROM account WHERE account_email = $1"
+  //     const email = await pool.query(sql, [account_email])
+  //     console.log(email)
+  //     if(account_email == email){
+  //       return true
+  //     }
+  //   } catch (error) {
+  //     return error.message
+  //   }
+  // }
+
+  module.exports = {registerAccount, checkExistingEmail}

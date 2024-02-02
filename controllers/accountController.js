@@ -8,6 +8,7 @@ const login = {}
 login.buildLogin = async function (req, res, next) {
     let nav = await utilities.getNav()
     res.render("account/login", {
+      errors: null,
       title: "Login",
       nav,
     })

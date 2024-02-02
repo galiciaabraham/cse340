@@ -1,4 +1,5 @@
 <h1 class="registration-page-title"><%= title %></h1>
+<%- messages() %>
 <% if (errors) { %>
     <ul class="notice">
    <% errors.array().forEach(error => { %>

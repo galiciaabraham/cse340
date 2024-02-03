@@ -79,7 +79,7 @@ invCont.addClassification = async function (req, res) {
         "notice",
         `Congratulations, you successfully added the new classification "${classification_name}".`)
         res.status(201).render("inventory/management",{
-            title: "Add Classification",
+            title: "Inventory Management",
             nav,
             errors: null
           })
@@ -102,6 +102,35 @@ invCont.addClassification = async function (req, res) {
       errors: null,
       options: select
     })
+}
+
+invCont.addInventory = async function (req, res) {
+  const {classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body
+
+  const addClassResult = await invModel.addInventory (
+    classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color
+    )
+
+  if (addClassResult) {
+    let nav = await utilities.getNav()
+    req.flash(
+      "notice",
+      `Congratulations, you successfully added the new Vehicle "${inv_year} ${inv_make} ${inv_model}".`)
+      res.status(201).render("inventory/management",{
+          title: "Inventory Management",
+          nav,
+          errors: null
+        })
+  } else {
+    let select = await utilities.buildOptions()
+    req.flash("notice", "Sorry, addition failed, please verify the information and try again. Or contact us for more support cse340@support.com")
+    res.status(501).render("inventory/add-inventory",{
+      title: "Add Inventory",
+      nav,
+      errors: null,
+      options: select
+    })
+  }
 }
 
 module.exports = invCont;

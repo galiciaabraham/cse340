@@ -67,16 +67,18 @@ validate.invAddRules = () => {
 Check data and return errors or continue to registration
 */ 
 validate.checkInvAddition = async (req, res, next) => {
-    const { classification_name} = req.body
+    const { classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body
     let errors = []
     errors = validationResult(req)
     if(!errors.isEmpty()) {
+        let select = await utilities.buildOptions()
         let nav = await utilities.getNav()
-        res.render("inventory/add-classification", {
+        res.render("inventory/add-inventory", {
             errors,
-            title: "Add Classification",
+            title: "Add Inventory",
             nav,
-            classification_name
+            options: select,
+            classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color
         })
         return
     }

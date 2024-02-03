@@ -88,10 +88,11 @@ Util.passwordButton = async function () {
 }
 
 Util.buildOptions = async function() {
-    const classificationData = invModel.getClassifications().rows[0]
+    const classificationData = await invModel.getClassifications()
     let options = ''
-    classificationData.forEach(classification => {
-        options = `<option value= ${classification.classification_id} >${classification.classification_name}</option>`
+    const classInner = [classificationData.rows]
+    classInner[0].forEach(classification => {
+        options += `<option value= ${classification.classification_id} >${classification.classification_name}</option>`
     })
     return options
 }

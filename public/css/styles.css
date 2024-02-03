@@ -497,6 +497,12 @@ form p {
   border: 2px solid black;
 }
 
+.add-inventory-title {
+  margin: 1rem;
+  font-family: 'Kanit', 'sans-serif';
+  font-size: 2rem;
+}
+
 /*LARGE VIEW STYLING*/
 
 @media screen and (min-width: 700px) {
@@ -565,6 +571,11 @@ body {
   margin:  auto;
 }
 #ShowPwdBtn:hover {
+  background-color: black;
+  color: white;
+}
+
+.add-class-button:hover {
   background-color: black;
   color: white;
 }

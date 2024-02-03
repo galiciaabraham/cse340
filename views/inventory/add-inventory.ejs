@@ -1,4 +1,4 @@
-<h1 class="add-inventory-page"><%= title %></h1>
+<h1 class="add-inventory-title"><%= title %></h1>
 <%- messages() %>
 <% if (errors) { %>
     <ul class="notice">
@@ -35,20 +35,20 @@
                 <input type="text" name="inv_image" required>
             </label>
             <label for="inv_thumbnail">
-                Image Path:
+                Thumbnail Path:
                 <input type="text" name="inv_thumbnail" required>
             </label>
             <label for="inv_price">
                 Price:
-                <input type="number" name="inv_price" required>
+                <input type="number" name="inv_price" min="0" required>
             </label>
             <label for="inv_year">
                 Year:
-                <input type="number" name="inv_year" required>
+                <input type="number" name="inv_year" min="0"  required>
             </label>
             <label for="inv_miles">
                 Mileage:
-                <input type="number" name="inv_miles" required>
+                <input type="number" name="inv_miles" min="0"  required>
             </label>
             <label for="inv_color">
                 Color:

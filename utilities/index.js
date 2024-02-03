@@ -77,7 +77,7 @@ Util.getNav = async function (req, res, next){
 Show password button function
 */
 Util.passwordButton = async function () {
-    const pswdBtn = document.querySelector("#ShowPswdBtn");
+    const pswdBtn = document.querySelector("#ShowPdwdBtn");
     pswdBtn.addEventListener("click", function() {
     const pswdInput = document.getElementById("pword");
     const type = pswdInput.getAttribute("type");
@@ -96,7 +96,7 @@ Get the classification names to build the options dinamically for the add Invent
 */
 Util.buildOptions = async function() {
     const classificationData = await invModel.getClassifications()
-    let options = ''
+    let options = '<option value="">Classification</option>'
     const classInner = [classificationData.rows]
     classInner[0].forEach(classification => {
         options += `<option value= ${classification.classification_id} >${classification.classification_name}</option>`

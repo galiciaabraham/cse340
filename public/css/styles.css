@@ -184,7 +184,7 @@ div.upgrades div {
 }
 
 .notice {
-  padding: none;
+  padding: 0;
 }
 .notice li {
   list-style: none;

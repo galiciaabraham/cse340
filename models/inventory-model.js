@@ -9,7 +9,7 @@ async function getClassifications(){
 
 async function getClassificationName(classification_id) {
     const classificationName = await pool.query(`SELECT classification_name FROM public.classification WHERE classification_id = $1`,[classification_id])
-    return classificationName.rows
+    return classificationName.rows[0].classification_name
 }
 /* 
  Get all inventory items and classification_name by classification_id

@@ -4,7 +4,7 @@ const utilities = require("../utilities")
 const accountController = require("../controllers/accountController")
 const regValidate = require("../utilities/account-validation")
 
-//Route to build inventory by classification view
+//Route to build login, registration views
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 router.get("/registration",
     //utilities.passwordButton(),

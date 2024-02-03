@@ -1,0 +1,44 @@
+const utilities = require(".")
+const { body, validationResult} = require
+("express-validator")
+const validate = {}
+const inventoryModel = require("../models/inventory-model")
+
+/* 
+Registration Data Validation Rules 
+*/
+validate.classAddRules = () => {
+    return [
+        //classification name is required and must be a string
+        body("classification_name").trim().isLength({ min: 1}).withMessage("Please provide a classification name").custom(async (classification_name) => {
+        const classificationExists = await inventoryModel.checkExistingClassification(classification_name)
+        if (classificationExists){
+            throw new Error("Classification already exists. Please use a different name")
+        }
+    }),
+    ]
+}
+
+/*
+Check data and return errors or continue to registration
+*/ 
+validate.checkClassAddition = async (req, res, next) => {
+    const { classification_name} = req.body
+    let errors = []
+    errors = validationResult(req)
+    if(!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        res.render("inv/add-classification", {
+            errors,
+            title: "Add Classification",
+            nav,
+            classification_name
+        })
+        return
+    }
+    next()
+}
+
+
+
+module.exports = validate

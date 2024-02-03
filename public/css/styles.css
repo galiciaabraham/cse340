@@ -239,6 +239,14 @@ div.upgrades div {
   font-size: 1rem;
   text-align: center;
   padding-bottom: 10px;
+
+  
+}
+
+.no-cars-notice {
+  margin: 3rem;
+  font-family: 'Kanit', 'sans-serif';
+  text-align: center;
 }
 
 /*Details Page styling*/

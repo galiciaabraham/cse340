@@ -20,7 +20,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
             grid,
     })
     } else {
-        grid = `<h2>Sorry, we currently have no cars related to this type! </h2>`
+        grid = `<h2 class="no-cars-notice">Sorry, we currently have no cars related to this type of vehicle! </h2>`
         let nav = await utilities.getNav()
         const className = await invModel.getClassificationName(classification_id)
         res.render("./inventory/classification", {
@@ -44,6 +44,7 @@ invCont.buildDetailsPage = async function (req, res, next) {
         grid,
     })
 }
+
 
 invCont.buildManagement = async function(req, res,next) {
     let nav = await utilities.getNav()
@@ -73,10 +74,11 @@ invCont.addClassification = async function (req, res) {
       )
   
     if (addClassResult) {
+      nav = await utilities.getNav()
       req.flash(
         "notice",
         `Congratulations, you successfully added the new classification "${classification_name}".`)
-        res.status(201).render("inventory/add-classification",{
+        res.status(201).render("inventory/management",{
             title: "Add Classification",
             nav,
             errors: null
@@ -90,5 +92,16 @@ invCont.addClassification = async function (req, res) {
       })
     }
   }
+
+  invCont.buildAddInv = async function(req, res, next) { 
+    let nav = await utilities.getNav()
+    let select = await utilities.buildOptions()
+    res.render("inventory/add-inventory",{
+      title: "Add Inventory",
+      nav,
+      errors: null,
+      options: select
+    })
+}
 
 module.exports = invCont;

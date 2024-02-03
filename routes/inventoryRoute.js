@@ -21,5 +21,13 @@ router.post(
     addInvValidation.checkClassAddition,
     middleware.handleErrors(invController.addClassification))
 
+router.get("/add-inventory", middleware.handleErrors(invController.buildAddInv))
+
+router.post(
+        "/add-inventory",
+        addInvValidation.invAddRules(),
+        addInvValidation.checkInvAddition,
+        middleware.handleErrors(invController.addInventory))
+    
 
 module.exports = router;

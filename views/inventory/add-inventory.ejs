@@ -1,0 +1,60 @@
+<h1 class="add-inventory-page"><%= title %></h1>
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+<div class="add-inventory-wrapper">
+    <div class="add-box">
+        <form action="/inv/add-inventory" method="post">
+            <p>Enter the new vehicle name information</p>
+            <hr>
+            <label for="classification_id">
+                Classification:
+                <select name="classification_id" id="classification_id">
+                    <%- options %>
+                </select>
+            </label>
+            <label for="inv_make">
+                Make:
+                <input type="text" name="inv_make" required>
+            </label>
+            <label for="inv_model">
+                Model:
+                <input type="text" name="inv_model" required>
+            </label>
+            <label for="inv_description">
+                Description:
+                <textarea name="inv_description" id="inv_description" cols="30" rows="10"></textarea>
+            </label>
+            <label for="inv_image">
+                Image Path:
+                <input type="text" name="inv_image" required>
+            </label>
+            <label for="inv_thumbnail">
+                Image Path:
+                <input type="text" name="inv_thumbnail" required>
+            </label>
+            <label for="inv_price">
+                Price:
+                <input type="number" name="inv_price" required>
+            </label>
+            <label for="inv_year">
+                Year:
+                <input type="number" name="inv_year" required>
+            </label>
+            <label for="inv_miles">
+                Mileage:
+                <input type="number" name="inv_miles" required>
+            </label>
+            <label for="inv_color">
+                Color:
+                <input type="text" name="inv_color" required>
+            </label>
+            <button type="submit" class="add-class-button">Add Vehicle</button>
+        </form>
+    </div>
+</div>

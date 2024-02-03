@@ -32,7 +32,9 @@ Util.buildClassificationGrid = async function(data){
         }
         return grid
     }
-
+/* 
+Build the grid for the details page
+*/
 Util.buildDetailsGrid = async function (dataObj) {
     let grid = ''
     dataObj.forEach(data => {
@@ -71,7 +73,9 @@ Util.getNav = async function (req, res, next){
     list += "</ul>"
     return list
 }
-
+/* 
+Show password button function
+*/
 Util.passwordButton = async function () {
     const pswdBtn = document.querySelector("#ShowPswdBtn");
     pswdBtn.addEventListener("click", function() {
@@ -87,6 +91,9 @@ Util.passwordButton = async function () {
 });
 }
 
+/* 
+Get the classification names to build the options dinamically for the add Inventory form 
+*/
 Util.buildOptions = async function() {
     const classificationData = await invModel.getClassifications()
     let options = ''

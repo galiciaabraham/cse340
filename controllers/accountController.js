@@ -14,7 +14,7 @@ login.buildLogin = async function (req, res, next) {
       nav,
     })
   }
-
+/* Build registration view */
 login.buildRegistration = async function (req, res, next) {
   let nav = await utilities.getNav()
   res.render("account/register", {
@@ -24,7 +24,9 @@ login.buildRegistration = async function (req, res, next) {
   })
 }
 
-/*Process Registration*/
+/*
+Registration Process
+*/
 login.registerAccount = async function (req, res) {
   let nav = await utilities.getNav()
   const {account_firstname, account_lastname, account_email, account_password} = req.body
@@ -48,9 +50,10 @@ login.registerAccount = async function (req, res) {
     account_lastname,
     account_email,
     hashedPassword
-  )
+  ) //uses the accountModel.registerAccount method to add the account to the database which returns a fufilled or failed promise
 
-  if (regResult) {
+  if (regResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+  {
     req.flash(
       "notice",
       `Congratulations, you\'re registered ${account_firstname}. Please log in.`)
@@ -59,7 +62,8 @@ login.registerAccount = async function (req, res) {
         title: "Login",
         nav,
       })
-  } else {
+  } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the add classification page.
+  {
     req.flash("notice", "Sorry, failed registration, please verify your information and try again.")
     res.status(501).render("account/register", {
       errors: null,

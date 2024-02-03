@@ -30,7 +30,9 @@ invCont.buildByClassificationId = async function (req, res, next) {
     })
     }
 }
-/* Build the details page by product id */
+/* 
+Build the details page by product id 
+*/
 invCont.buildDetailsPage = async function (req, res, next) {
     const product_id = req.params.invId
     const data = await invModel.getCarDetailsById(product_id)
@@ -45,7 +47,9 @@ invCont.buildDetailsPage = async function (req, res, next) {
     })
 }
 
-
+/*
+Build inventory management view
+*/
 invCont.buildManagement = async function(req, res,next) {
     let nav = await utilities.getNav()
     // req.flash("notice", "This is a test message for the management page")
@@ -55,6 +59,7 @@ invCont.buildManagement = async function(req, res,next) {
     })
   }
 
+/*Build classification addition view*/
 invCont.buildAddClass = async function(req, res, next) { 
     let nav = await utilities.getNav()
     res.render("inventory/add-classification",{
@@ -64,16 +69,19 @@ invCont.buildAddClass = async function(req, res, next) {
     })
 }
 
-/*Process Registration*/
+/*
+Add classification process
+*/
 invCont.addClassification = async function (req, res) {
     let nav = await utilities.getNav()
-    const {classification_name} = req.body
+    const {classification_name} = req.body //Gets the classification from the post request body
   
     const addClassResult = await invModel.addClassification(
       classification_name
-      )
+      ) //uses the invModel.addClassification method to add the new classification to the database which returns a fufilled or failed promise
   
-    if (addClassResult) {
+    if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+    {
       nav = await utilities.getNav()
       req.flash(
         "notice",
@@ -83,7 +91,8 @@ invCont.addClassification = async function (req, res) {
             nav,
             errors: null
           })
-    } else {
+    } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the add classification page.
+    {
       req.flash("notice", "Sorry, addition failed, please verify the information and try again. Or contact us for more support cse340@support.com")
       res.status(501).render("inventory/add-classification",{
         title: "Add Classification",
@@ -93,6 +102,9 @@ invCont.addClassification = async function (req, res) {
     }
   }
 
+/* 
+Build the inventory view  
+*/
   invCont.buildAddInv = async function(req, res, next) { 
     let nav = await utilities.getNav()
     let select = await utilities.buildOptions()
@@ -104,14 +116,18 @@ invCont.addClassification = async function (req, res) {
     })
 }
 
+/* 
+Add inventory process
+*/
 invCont.addInventory = async function (req, res) {
-  const {classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body
+  const {classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body //Gets the values from the post request body
 
   const addClassResult = await invModel.addInventory (
     classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color
-    )
+    ) //uses the invModel.addInventory method to add the vehicle to the database which returns a fufilled or failed promise 
 
-  if (addClassResult) {
+  if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+  {
     let nav = await utilities.getNav()
     req.flash(
       "notice",
@@ -121,7 +137,8 @@ invCont.addInventory = async function (req, res) {
           nav,
           errors: null
         })
-  } else {
+  } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the add inventory page.
+  {
     let select = await utilities.buildOptions()
     req.flash("notice", "Sorry, addition failed, please verify the information and try again. Or contact us for more support cse340@support.com")
     res.status(501).render("inventory/add-inventory",{

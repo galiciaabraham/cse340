@@ -5,7 +5,7 @@ const validate = {}
 const inventoryModel = require("../models/inventory-model")
 
 /* 
-Registration Data Validation Rules 
+Classification Addition Data Validation Rules 
 */
 validate.classAddRules = () => {
     return [
@@ -20,7 +20,7 @@ validate.classAddRules = () => {
 }
 
 /*
-Check data and return errors or continue to registration
+Check classification addition and return errors if any
 */ 
 validate.checkClassAddition = async (req, res, next) => {
     const { classification_name} = req.body
@@ -38,7 +38,9 @@ validate.checkClassAddition = async (req, res, next) => {
     }
     next()
 }
-
+/* 
+Inventory Addition Data Validation Rules 
+*/
 validate.invAddRules = () => {
     return [
         body("classification_id").isLength({ min: 1}).withMessage("Please provide a classification name"),
@@ -64,7 +66,7 @@ validate.invAddRules = () => {
 }
 
 /*
-Check data and return errors or continue to registration
+Check inventory addition data and return errors or continue to add
 */ 
 validate.checkInvAddition = async (req, res, next) => {
     const { classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body

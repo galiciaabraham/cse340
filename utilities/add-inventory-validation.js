@@ -80,7 +80,7 @@ validate.checkInvAddition = async (req, res, next) => {
             title: "Add Inventory",
             nav,
             options: select,
-            classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color
+            classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color //for stickiness 
         })
         return
     }

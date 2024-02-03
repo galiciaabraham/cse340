@@ -15,8 +15,10 @@ validate.registrationRules = () => {
         body("account_lastname").trim().isLength({ min: 1}).withMessage("Please provide a last name"),
         //valid email is required and cannot already exist in data base.
         body("account_email").trim().isEmail().normalizeEmail().withMessage("A valid email is required.").custom(async (account_email) => {
-    const emailExists = await accountModel.checkExistingEmail(account_email)
-    if (emailExists){
+    const emailExists = await accountModel.checkExistingEmail(account_email) //User the accountModel.checkExistingEmail method to check if the email exists in the database
+    // it returns the row count 0 or 1 it shouldn't be more than 1
+    if (emailExists) //using the emailExists variable it returns an error if the count returned more than 1
+    {
       throw new Error("Email exists. Please log in or use different email")
     }
     }),
@@ -43,9 +45,9 @@ validate.checkRegData = async (req, res, next) => {
             errors,
             title: "Registration",
             nav,
-            account_firstname,
-            account_lastname,
-            account_email,
+            account_firstname, //for stickiness 
+            account_lastname, //for stickiness 
+            account_email, //for stickiness 
         })
         return
     }
@@ -74,7 +76,7 @@ validate.loginRules = () => {
 }
 
 /*
-Check data and return errors or continue to registration
+Check data and return errors or continue to login
 */ 
 validate.checkLoginData = async (req, res, next) => {
     const {account_email} = req.body
@@ -86,7 +88,7 @@ validate.checkLoginData = async (req, res, next) => {
             errors,
             title: "Login",
             nav,
-            account_email,
+            account_email, //for stickiness 
         })
         return
     }

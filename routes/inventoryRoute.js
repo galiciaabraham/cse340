@@ -21,8 +21,10 @@ router.post(
     addInvValidation.checkClassAddition,
     middleware.handleErrors(invController.addClassification))
 
+//Route to build the add inventory view
 router.get("/add-inventory", middleware.handleErrors(invController.buildAddInv))
 
+//Route to add new inventory using a post request
 router.post(
         "/add-inventory",
         addInvValidation.invAddRules(),

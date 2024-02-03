@@ -28,8 +28,10 @@ async function getInventoryByClassificationId(classification_id) {
         console.error("getclassificationbyid error" + error)
     }
 }
-/*Gets the details of an specific product by Id 
-matching the product_id being passed as a parameter*/
+/*
+Gets the details of an specific product by Id 
+matching the product_id being passed as a parameter
+*/
 async function getCarDetailsById (product_id) {
     try {
         const data = await pool.query(
@@ -44,7 +46,7 @@ async function getCarDetailsById (product_id) {
 }
 
 /*
-Add new classification
+Add new classification to the classification table in database
 */
 async function addClassification(classification_name){
     try {
@@ -67,7 +69,9 @@ Check for existing email
       return error.message
     }
   }
-
+/* 
+Add new vehicle to the inventory table in the database
+*/
 async function addInventory(classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color){
     try {
       const sql = "INSERT INTO inventory (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *"

@@ -16,7 +16,7 @@ router.post("/register",
     regValidate.checkRegData,
     utilities.handleErrors(accountController.registerAccount))
 
-// Process the login attempt
+// Process the login attempt using a post request
 router.post(
         "/login", 
         regValidate.loginRules(),

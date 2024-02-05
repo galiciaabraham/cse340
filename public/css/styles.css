@@ -450,7 +450,7 @@ form p {
   border-radius: 5px;
   border: 2px solid black;
 }
-
+/* Inventory Management view*/
 .inv-management-list {
   margin: 1rem;
 
@@ -467,7 +467,7 @@ form p {
   padding: 1rem;
 }
 
-/*Add Classification View Styling*/
+/*Add Classification and Inventory View Styling*/
 .add-classification-page {
   margin: 1rem;
   font-family: 'Kanit', 'sans-serif';
@@ -501,6 +501,29 @@ form p {
   margin: 1rem;
   font-family: 'Kanit', 'sans-serif';
   font-size: 2rem;
+}
+
+/*Account Management View*/
+.account-management-title {
+  margin: 1rem;
+  font-family: 'Kanit', 'sans-serif';
+  font-size: 2rem;
+}
+
+.account-management-list {
+  margin: 1rem;
+
+}
+
+.account-management-list li { 
+  margin: 1.5rem;
+  list-style-type: disclosure-closed;
+}
+.account-management-list li a {
+  font-family: 'Work Sans', 'sans-serif';
+  font-size: 1.5rem;
+  color: black;
+  padding: 1rem;
 }
 
 /*LARGE VIEW STYLING*/

@@ -4,6 +4,11 @@ const utilities = require("../utilities")
 const accountController = require("../controllers/accountController")
 const regValidate = require("../utilities/account-validation")
 
+//Default route
+router.get("/",
+    utilities.checkLogin,
+    utilities.handleErrors(accountController.buildAccountManagement))
+
 //Route to build login, registration views
 router.get("/login", 
     //utilities.passwordButton(),
@@ -12,9 +17,6 @@ router.get("/login",
 router.get("/registration",
     //utilities.passwordButton(),
     utilities.handleErrors(accountController.buildRegistration))
-
-router.get("/",
-    utilities.handleErrors(accountController.buildAccountManagement))
 
 //Route to post a new user registration
 router.post("/register",

@@ -96,14 +96,20 @@ Util.passwordButton = async function () {
 /* 
 Get the classification names to build the options dinamically for the add Inventory form 
 */
-Util.buildClassificationList = async function() {
+Util.buildClassificationList = async function(classification_id = "1") {
     const classificationData = await invModel.getClassifications()
     let options = `<select name="classification_id" id="classification_id" class="classificationList" required ><option value="">Classification</option>`
     const classInner = [classificationData.rows]
     classInner[0].forEach(classification => {
-        options += `<option value= ${classification.classification_id}>${classification.classification_name}</option>`
+        // check if the current option matches the last selected classification_id
+        let selected = ""
+        if (classification.classification_id == classification_id) {
+            selected = "selected" 
+        }
+        options += `<option value= ${classification.classification_id} ${selected}>${classification.classification_name}</option>`
     })
     options += `</select>`
+
     return options
 }
 

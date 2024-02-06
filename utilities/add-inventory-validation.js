@@ -73,7 +73,7 @@ validate.checkInvAddition = async (req, res, next) => {
     let errors = []
     errors = validationResult(req)
     if(!errors.isEmpty()) {
-        let select = await utilities.buildClassificationList()
+        let select = await utilities.buildClassificationList(classification_id)
         let nav = await utilities.getNav()
         res.render("inventory/add-inventory", {
             errors,

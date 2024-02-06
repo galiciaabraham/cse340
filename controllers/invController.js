@@ -61,6 +61,35 @@ invCont.buildManagement = async function(req, res,next) {
     })
   }
 
+/* 
+Build the edit inventory view  
+*/
+invCont.buildEditInv = async function(req, res, next) {
+  const inv_id = ParseInt(req.params.invId)
+  let nav = await utilities.getNav()
+  const data = await invModel.getCarDetailsById(inv_id)
+  let name = `${data[0].inv_make} ${data[0].inv_model}`
+  let select = await utilities.buildClassificationList(data[0].classification_id)
+  res.render("inventory/edit-inventory",{
+    title: `Edit ${name}`,
+    nav,
+    errors: null,
+    options: select,
+    inv_id: data[0].inv_id,
+    inv_make: data[0].inv_make,
+    inv_model: data[0].inv_model,
+    inv_year: data[0].inv_year,
+    inv_description: data[0].inv_description,
+    inv_image: data[0].inv_image,
+    inv_thumbnail: data[0].inv_thumbnail,
+    inv_price: data[0].inv_price,
+    inv_miles: data[0].inv_miles,
+    inv_color: data[0].inv_color,
+    classification_id: data[0].classification_id
+  })
+}
+
+
 /*
 Build classification addition view
 */
@@ -101,13 +130,15 @@ invCont.addClassification = async function (req, res) {
     if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
     {
       nav = await utilities.getNav()
+      const classificationSelect = await utilities.buildClassificationList()
       req.flash(
         "notice",
         `Congratulations, you successfully added the new classification "${classification_name}".`)
         res.status(201).render("inventory/management",{
             title: "Inventory Management",
             nav,
-            errors: null
+            errors: null,
+            classificationSelect,
           })
     } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the add classification page.
     {
@@ -134,17 +165,19 @@ invCont.addInventory = async function (req, res) {
   if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
   {
     let nav = await utilities.getNav()
+    const classificationSelect = await utilities.buildClassificationList()
     req.flash(
       "notice",
       `Congratulations, you successfully added the new Vehicle "${inv_year} ${inv_make} ${inv_model}".`)
       res.status(201).render("inventory/management",{
           title: "Inventory Management",
           nav,
-          errors: null
+          errors: null,
+          classificationSelect,
         })
   } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the add inventory page.
   {
-    let select = await utilities.buildClassificationList()
+    let select = await utilities.buildClassificationList(classification_id)
     req.flash("notice", "Sorry, addition failed, please verify the information and try again. Or contact us for more support cse340@support.com")
     res.status(501).render("inventory/add-inventory",{
       title: "Add Inventory",

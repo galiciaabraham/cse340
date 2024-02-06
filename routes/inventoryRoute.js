@@ -4,6 +4,11 @@ const invController = require("../controllers/invController");
 const middleware = require("../utilities")
 const addInvValidation = require("../utilities/add-inventory-validation")
 
+//Default route
+router.get("/",
+    middleware.checkLogin,
+    middleware.handleErrors(invController.buildManagement))
+
 //Route to build inventory by classification view
 router.get("/type/:classificationId", middleware.handleErrors(invController.buildByClassificationId))
 
@@ -42,5 +47,11 @@ router.post(
         addInvValidation.checkInvAddition,
         middleware.handleErrors(invController.addInventory))
     
+router.post(
+    "/update/", 
+    addInvValidation.invAddRules(),
+    addInvValidation.checkInvUpdate,
+    middleware.handleErrors (invController.updateInventory)
+)
 
 module.exports = router;

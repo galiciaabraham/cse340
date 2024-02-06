@@ -89,6 +89,48 @@ invCont.buildEditInv = async function(req, res, next) {
   })
 }
 
+/* 
+Edit inventory process
+*/
+invCont.updateInventory = async function (req, res) {
+  const {classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, inv_id } = req.body //Gets the values from the post request body
+
+  const updateResult = await invModel.updateInventory (
+    classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, inv_id
+    ) //uses the invModel.updateInventory method to update the vehicle to the database which returns a fufilled or failed promise 
+
+  if (updateResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+  {
+    const itemName = updateResult.inv_make + " " + updateResult.inv_model
+    req.flash("notice", `The ${itemName} was successfully updated.`)
+    res.redirect("/inv/")
+  } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the add inventory page.
+  {
+    let select = await utilities.buildClassificationList(classification_id)
+    const itemName = `${inv_make} ${inv_model}`
+    let nav = utilities.getNav()
+    req.flash("notice", "Sorry, the edition failed, please verify the information and try again. Or contact us for more support cse340@support.com")
+    res.status(501).render("inventory/edit-inventory",{
+      title: `Edit  ${itemName}`,
+      nav,
+      options :select,
+      errors: null,
+      options: select,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id
+    })
+  }
+}
+
 
 /*
 Build classification addition view
@@ -188,6 +230,41 @@ invCont.addInventory = async function (req, res) {
   }
 }
 
+/* 
+Add inventory process
+*/
+invCont.addInventory = async function (req, res) {
+  const {classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body //Gets the values from the post request body
+
+  const addClassResult = await invModel.addInventory (
+    classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color
+    ) //uses the invModel.addInventory method to add the vehicle to the database which returns a fufilled or failed promise 
+
+  if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+  {
+    let nav = await utilities.getNav()
+    const classificationSelect = await utilities.buildClassificationList()
+    req.flash(
+      "notice",
+      `Congratulations, you successfully added the new Vehicle "${inv_year} ${inv_make} ${inv_model}".`)
+      res.status(201).render("inventory/management",{
+          title: "Inventory Management",
+          nav,
+          errors: null,
+          classificationSelect,
+        })
+  } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the add inventory page.
+  {
+    let select = await utilities.buildClassificationList(classification_id)
+    req.flash("notice", "Sorry, addition failed, please verify the information and try again. Or contact us for more support cse340@support.com")
+    res.status(501).render("inventory/add-inventory",{
+      title: "Add Inventory",
+      nav,
+      errors: null,
+      options: select
+    })
+  }
+}
 /*
 Return Inventory by Classification as JSON 
 */

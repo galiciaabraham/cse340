@@ -9,7 +9,7 @@
   <% } %>
 <div class="modify-inventory-wrapper">
     <div class="add-box">
-        <form action="/inv/update" method="post">
+        <form action="/inv/update" method="post" id="updateForm">
             <p>Enter the new vehicle name information</p>
             <hr>
             <label for="classification_id">
@@ -52,7 +52,12 @@
                 Color:
                 <input type="text" name="inv_color" id="inv_color" value="<%= locals.inv_color %>" required>
             </label>
-            <button type="submit" class="edit-inv-button">Update Vehicle</button>
+            <input type="hidden" name="inv_id"
+<% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+<% } %>>
+            <button type="submit" class="edit-inv-button" disabled>Update Vehicle</button>
         </form>
     </div>
 </div>
+
+<script src="../../js/inv-update.js"></script>

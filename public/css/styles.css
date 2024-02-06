@@ -487,7 +487,7 @@ form p {
 }
 
 .classificationList {
-  margin: 2rem;
+  margin: 1rem;
   font-size: 1rem;
 }
 
@@ -536,7 +536,7 @@ form p {
   max-width: 500px;
 }
 
-.add-class-button {
+.add-class-button, .edit-inv-button  {
   height: 2rem;
   font-size: 1rem;
   font-family: 'Work Sans', 'sans-serif';
@@ -547,6 +547,12 @@ form p {
 }
 
 .add-inventory-title {
+  margin: 1rem;
+  font-family: 'Kanit', 'sans-serif';
+  font-size: 2rem;
+}
+
+.modify-inventory-title {
   margin: 1rem;
   font-family: 'Kanit', 'sans-serif';
   font-size: 2rem;

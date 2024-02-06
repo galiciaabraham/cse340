@@ -65,7 +65,7 @@ invCont.buildManagement = async function(req, res,next) {
 Build the edit inventory view  
 */
 invCont.buildEditInv = async function(req, res, next) {
-  const inv_id = ParseInt(req.params.invId)
+  const inv_id = parseInt(req.params.invId)
   let nav = await utilities.getNav()
   const data = await invModel.getCarDetailsById(inv_id)
   let name = `${data[0].inv_make} ${data[0].inv_model}`

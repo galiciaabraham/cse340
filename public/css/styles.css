@@ -451,6 +451,12 @@ form p {
   border: 2px solid black;
 }
 /* Inventory Management view*/
+.management-page-title {
+  margin: 1rem;
+  font-family: 'Kanit', 'sans-serif';
+  font-size: 2rem;
+}
+
 .inv-management-list {
   margin: 1rem;
 
@@ -467,6 +473,49 @@ form p {
   padding: 1rem;
 }
 
+.manage-inventory-title {
+  margin: 1rem;
+  font-family: 'Kanit', 'sans-serif';
+  font-size: 1.5rem;
+}
+
+.manage-inventory-instructions {
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+  margin: 1rem;
+  text-align: justify;
+}
+
+.classificationList {
+  margin: 2rem;
+  font-size: 1rem;
+}
+
+#inventoryDisplay {
+  margin: 2rem;
+  font-size: 1.5rem;
+  background-color: #4C96D7;
+}
+
+#inventoryDisplay th {
+  font-family: 'Kanit', 'sans-serif';
+  font-size: 1.5rem;
+  background-color: black;
+  color: white;
+
+}
+
+#inventoryDisplay td {
+  font-family: 'Work Sans', 'sans-serif';
+  font-size: 1rem;
+  padding: 1rem;
+  color: white;
+  border: 2px solid black;
+}
+
+#inventoryDisplay td a {
+  color: white;
+}
 /*Add Classification and Inventory View Styling*/
 .add-classification-page {
   margin: 1rem;

@@ -14,6 +14,11 @@ router.get("/management", middleware.handleErrors(invController.buildManagement)
 //Route to build the add classification view
 router.get("/add-classification", middleware.handleErrors(invController.buildAddClass))
 
+//Route to process the AJAX request
+router.get("/getInventory/:classification_id",
+middleware.checkLogin,
+middleware.handleErrors(invController.getInventoryJSON))
+
 //Route to send a post request to the server to add a new classification
 router.post(
     "/add-classification",

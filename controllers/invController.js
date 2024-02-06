@@ -53,9 +53,11 @@ Build inventory management view
 invCont.buildManagement = async function(req, res,next) {
     let nav = await utilities.getNav()
     // req.flash("notice", "This is a test message for the management page")
+    const classificationSelect = await utilities.buildClassificationList()
     res.render("inventory/management",{
       title: "Inventory Management",
       nav,
+      classificationSelect,
     })
   }
 
@@ -69,6 +71,20 @@ invCont.buildAddClass = async function(req, res, next) {
       nav,
       errors: null
     })
+}
+
+/* 
+Build the inventory view  
+*/
+invCont.buildAddInv = async function(req, res, next) { 
+  let nav = await utilities.getNav()
+  let select = await utilities.buildClassificationList()
+  res.render("inventory/add-inventory",{
+    title: "Add Inventory",
+    nav,
+    errors: null,
+    options: select
+  })
 }
 
 /*
@@ -104,19 +120,6 @@ invCont.addClassification = async function (req, res) {
     }
   }
 
-/* 
-Build the inventory view  
-*/
-  invCont.buildAddInv = async function(req, res, next) { 
-    let nav = await utilities.getNav()
-    let select = await utilities.buildOptions()
-    res.render("inventory/add-inventory",{
-      title: "Add Inventory",
-      nav,
-      errors: null,
-      options: select
-    })
-}
 
 /* 
 Add inventory process
@@ -141,7 +144,7 @@ invCont.addInventory = async function (req, res) {
         })
   } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the add inventory page.
   {
-    let select = await utilities.buildOptions()
+    let select = await utilities.buildClassificationList()
     req.flash("notice", "Sorry, addition failed, please verify the information and try again. Or contact us for more support cse340@support.com")
     res.status(501).render("inventory/add-inventory",{
       title: "Add Inventory",
@@ -149,6 +152,19 @@ invCont.addInventory = async function (req, res) {
       errors: null,
       options: select
     })
+  }
+}
+
+/*
+Return Inventory by Classification as JSON 
+*/
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData[0].inv_id) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
   }
 }
 

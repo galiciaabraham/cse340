@@ -23,6 +23,9 @@ middleware.handleErrors(invController.buildManagement))
 //Route to build the edition page
 router.get("/edit/:invId", middleware.handleErrors(invController.buildEditInv))
 
+//Route to build the deletion confirmation page
+router.get("/delete/:invId", middleware.handleErrors(invController.buildDeleteInv))
+
 //Route to build the add classification view
 router.get("/add-classification", middleware.handleErrors(invController.buildAddClass))
 
@@ -46,12 +49,16 @@ router.post(
         addInvValidation.invAddRules(),
         addInvValidation.checkInvAddition,
         middleware.handleErrors(invController.addInventory))
-    
+
+//Route to update inventory using a post request    
 router.post(
     "/update/", 
     addInvValidation.invAddRules(),
     addInvValidation.checkInvUpdate,
     middleware.handleErrors (invController.updateInventory)
 )
+
+//Route to delete inventory using a post request
+router.post("/delete/", middleware.handleErrors(invController.deleteInventory))
 
 module.exports = router;

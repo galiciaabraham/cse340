@@ -107,7 +107,7 @@ invCont.updateInventory = async function (req, res) {
   } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the add inventory page.
   {
     let select = await utilities.buildClassificationList(classification_id)
-    const itemName = `${inv_make} ${inv_model}`
+    const itemName = `${updateResult.inv_make} ${updateResult.inv_model}`
     let nav = utilities.getNav()
     req.flash("notice", "Sorry, the edition failed, please verify the information and try again. Or contact us for more support cse340@support.com")
     res.status(501).render("inventory/edit-inventory",{
@@ -127,6 +127,58 @@ invCont.updateInventory = async function (req, res) {
       inv_miles,
       inv_color,
       classification_id
+    })
+  }
+}
+
+/* 
+Build the delete inventory view  
+*/
+invCont.buildDeleteInv = async function(req, res, next) {
+  const inv_id = parseInt(req.params.invId)
+  let nav = await utilities.getNav()
+  const data = await invModel.getCarDetailsById(inv_id)
+  let name = `${data[0].inv_make} ${data[0].inv_model}`
+  res.render("inventory/delete-confirm",{
+    title: `Delete ${name}`,
+    nav,
+    errors: null,
+    inv_id: data[0].inv_id,
+    inv_make: data[0].inv_make,
+    inv_model: data[0].inv_model,
+    inv_year: data[0].inv_year,
+    inv_price: data[0].inv_price,
+  })
+}
+
+/* 
+Delete inventory process
+*/
+invCont.deleteInventory = async function (req, res) {
+  const { inv_id } = req.body //Gets the values from the post request body
+
+  const deleteResult = await invModel.deleteInventory ( inv_id ) //uses the invModel.deleteInventory method to delete the vehicle from the database which returns a fufilled or failed promise 
+
+  if (deleteResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+  {
+    req.flash("notice", `The vehicle was successfully deleted.`)
+    res.redirect("/inv/")
+  } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the delete inventory page.
+  {
+    const itemName = `${deleteResult.inv_make} ${deleteResult.inv_model}`
+    let nav = utilities.getNav()
+    req.flash("notice", "Sorry, the deletion failed, please verify the information and try again. Or contact us for more support at cse340@support.com")
+    res.status(501).render("inventory/delete-confirm",{
+      title: `Delete  ${itemName}`,
+      nav,
+      options :select,
+      errors: null,
+      options: select,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
     })
   }
 }

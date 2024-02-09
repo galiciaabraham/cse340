@@ -155,7 +155,7 @@ invCont.buildDeleteInv = async function(req, res, next) {
 Delete inventory process
 */
 invCont.deleteInventory = async function (req, res) {
-  const { inv_id } = req.body //Gets the values from the post request body
+  const { inv_id, inv_make, inv_model, inv_price } = req.body //Gets the values from the post request body
 
   const deleteResult = await invModel.deleteInventory ( inv_id ) //uses the invModel.deleteInventory method to delete the vehicle from the database which returns a fufilled or failed promise 
 

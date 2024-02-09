@@ -618,6 +618,42 @@ font-weight: bold;
   padding: 1rem;
 }
 
+/*Update account styling*/
+.update-account-title {
+  margin: 1rem;
+  font-family: 'Kanit', 'sans-serif';
+  font-size: 2rem;
+}
+.update-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+fieldset {
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+  color: white;
+  border: 2px dashed white;
+}
+
+.update-box {
+  margin: 2rem auto;
+  background-color: rgb(48, 93, 135);
+  border-radius: 5px;
+  border: 5px solid black;
+  max-width: 500px;
+}
+
+.update-button {
+  height: 2rem;
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+
 /*LARGE VIEW STYLING*/
 
 @media screen and (min-width: 700px) {
@@ -697,6 +733,11 @@ body {
 
 
 .delete-inv-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.update-button:hover {
   background-color: black;
   color: white;
 }

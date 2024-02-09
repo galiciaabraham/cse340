@@ -9,15 +9,18 @@ router.get("/",
     utilities.checkLogin,
     utilities.handleErrors(accountController.buildAccountManagement))
 
-//Route to build login, registration views
+//Route to build login view
 router.get("/login", 
-    //utilities.passwordButton(),
     utilities.handleErrors(accountController.buildLogin));
 
+//Route to build registration view
 router.get("/registration",
-    //utilities.passwordButton(),
     utilities.handleErrors(accountController.buildRegistration))
 
+//Route to build account update view
+router.get("/update",
+    utilities.handleErrors(accountController.buildAccountUpdate))
+    
 //Route to post a new user registration
 router.post("/register",
     regValidate.registrationRules(),

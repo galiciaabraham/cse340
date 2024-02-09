@@ -35,6 +35,21 @@ login.buildAccountManagement = async function (req, res) {
   })
 }
 
+/* Build update account view */
+login.buildAccountUpdate = async function (req, res, next) {
+  const account_id = parseInt(res.locals.accountData.account_id)
+  let nav = await utilities.getNav()
+  const data = await accountModel.getAccountDetailsById(account_id)
+  let name = `${data.account_lastname} ${data.account_firstname}`
+  res.render("account/update-account", {
+    errors: null,
+    title: `Update ${name}'s  account information`,
+    nav,
+    account_firstname : data.account_firstname,
+    account_lastname : data.account_lastname,
+    account_email : data.account_email,
+  })
+}
 /*
 Registration Process
 */

@@ -39,17 +39,18 @@ Check for existing email
   }
  }
 
-  // async function checkLoginEmail(account_email) {
-  //   try {
-  //     const sql = "SELECT * FROM account WHERE account_email = $1"
-  //     const email = await pool.query(sql, [account_email])
-  //     console.log(email)
-  //     if(account_email == email){
-  //       return true
-  //     }
-  //   } catch (error) {
-  //     return error.message
-  //   }
-  // }
+   /*
+  Return account data using account id 
+  */
+  async function getAccountDetailsById (account_id) {
+    try {
+      let sql = 'SELECT account_firstname, account_lastname, account_email FROM account WHERE account_id = $1'
+      const result = await pool.query(sql
+        ,[account_id])
+        return result.rows[0]
+    } catch (error) {
+      return new Error("No matching account found")
+    }
+   }
 
-  module.exports = {registerAccount, checkExistingEmail, getAccountByEmail}
+  module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, getAccountDetailsById}

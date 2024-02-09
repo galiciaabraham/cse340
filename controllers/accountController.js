@@ -130,4 +130,80 @@ try {
   return new Error('Access Forbidden')
   }
 }
+
+/*Process to update the account */
+login.accountUpdate = async function (req, res) {
+  const {account_id, account_firstname, account_lastname, account_email } = req.body //Gets the values from the post request body
+
+  const updateResult = await invModel.updateAccount (
+    account_id, account_firstname, account_lastname, account_email
+    ) //uses the invModel.updateInventory method to update the vehicle to the database which returns a fufilled or failed promise 
+
+  if (updateResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the account management view 
+  {
+    const AccountName = updateResult.account_firstname + " " + updateResult.account_lastname
+    req.flash("notice", `The account for ${AccountName} was successfully updated.`)
+    res.redirect("/account/")
+  } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to theaccount management page.
+  {
+    let nav = utilities.getNav()
+    const data = await accountModel.getAccountDetailsById(account_id)
+    const AccountName = data.account_firstname + " " + data.account_lastname
+    req.flash("notice", "Sorry, the update attempt failed, please verify the information and try again. Or contact us for more support cse340@support.com")
+    res.status(501).render("account/update-account",{
+      title: `Update ${AccountName}'s  account information`,
+      nav,
+      account_firstname : data.account_firstname,
+      account_lastname : data.account_lastname,
+      account_email : data.account_email,
+    })
+  }
+}
+
+/*Process to update the password */
+login.passwordUpdate = async function (req, res) {
+  const {account_password, account_id} = req.body //Gets the values from the post request body
+
+  // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    const data = await accountModel.getAccountDetailsById(account_id)
+    const AccountName = data.account_firstname + " " + data.account_lastname
+    req.flash("notice", 'Sorry, there was an error processing the update.')
+    res.status(501).render("account/update-account",{
+      title: `Update ${AccountName}'s  account information`,
+      nav,
+      account_firstname : data.account_firstname,
+      account_lastname : data.account_lastname,
+      account_email : data.account_email,
+    })
+  }
+
+  const updateResult = await invModel.passwordUpdate ( hashedPassword, account_id ) //uses the invModel.updateInventory method to update the vehicle to the database which returns a fufilled or failed promise 
+
+  if (updateResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+  {
+    const data = await accountModel.getAccountDetailsById(account_id)
+    const AccountName = data.account_firstname + " " + data.account_lastname
+    req.flash("notice", `The password for ${AccountName} was successfully updated.`)
+    res.redirect("/account/")
+  } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the add inventory page.
+  {
+    let nav = utilities.getNav()
+    const data = await accountModel.getAccountDetailsById(account_id)
+    const AccountName = data.account_firstname + " " + data.account_lastname
+    req.flash("notice", "Sorry, the update attempt failed, please verify the information and try again. Or contact us for more support cse340@support.com")
+    res.status(501).render("account/update-account",{
+      title: `Update ${AccountName}'s  account information`,
+      nav,
+      account_firstname : data.account_firstname,
+      account_lastname : data.account_lastname,
+      account_email : data.account_email,
+    })
+  }
+}
+
   module.exports = login

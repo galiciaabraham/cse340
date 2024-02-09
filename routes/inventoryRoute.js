@@ -18,16 +18,32 @@ router.get("/detail/:invId", middleware.handleErrors(invController.buildDetailsP
 //Route to build management view
 router.get("/management", 
 middleware.checkLogin,
+middleware.checkAccountType,
 middleware.handleErrors(invController.buildManagement))
 
+//Route to build the add classification view
+router.get("/add-classification",
+middleware.checkLogin,
+middleware.checkAccountType, 
+middleware.handleErrors(invController.buildAddClass))
+
+//Route to build the add inventory view
+router.get("/add-inventory",
+middleware.checkLogin,
+middleware.checkAccountType,
+middleware.checkAccountType,middleware.handleErrors(invController.buildAddInv))
+
 //Route to build the edition page
-router.get("/edit/:invId", middleware.handleErrors(invController.buildEditInv))
+router.get("/edit/:invId", 
+middleware.checkLogin,
+middleware.checkAccountType,
+middleware.handleErrors(invController.buildEditInv))
 
 //Route to build the deletion confirmation page
-router.get("/delete/:invId", middleware.handleErrors(invController.buildDeleteInv))
-
-//Route to build the add classification view
-router.get("/add-classification", middleware.handleErrors(invController.buildAddClass))
+router.get("/delete/:invId", 
+middleware.checkLogin,
+middleware.checkAccountType,
+middleware.handleErrors(invController.buildDeleteInv))
 
 //Route to process the AJAX request
 router.get("/getInventory/:classification_id",
@@ -38,16 +54,17 @@ router.post(
     "/add-classification",
     addInvValidation.classAddRules(),
     addInvValidation.checkClassAddition,
+    middleware.checkLogin,
+    middleware.checkAccountType,
     middleware.handleErrors(invController.addClassification))
-
-//Route to build the add inventory view
-router.get("/add-inventory", middleware.handleErrors(invController.buildAddInv))
 
 //Route to add new inventory using a post request
 router.post(
         "/add-inventory",
         addInvValidation.invAddRules(),
         addInvValidation.checkInvAddition,
+        middleware.checkLogin,
+        middleware.checkAccountType,
         middleware.handleErrors(invController.addInventory))
 
 //Route to update inventory using a post request    
@@ -55,10 +72,16 @@ router.post(
     "/update/", 
     addInvValidation.invAddRules(),
     addInvValidation.checkInvUpdate,
+    middleware.checkLogin,
+    middleware.checkAccountType,
     middleware.handleErrors (invController.updateInventory)
 )
 
 //Route to delete inventory using a post request
-router.post("/delete/", middleware.handleErrors(invController.deleteInventory))
+router.post(
+    "/delete/", 
+    middleware.checkLogin,
+    middleware.checkAccountType,
+    middleware.handleErrors(invController.deleteInventory))
 
 module.exports = router;

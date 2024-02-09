@@ -129,18 +129,30 @@ Util.checkJWTToken = (req, res, next) => {
        }
        res.locals.accountData = accountData
        res.locals.loggedin = 1
+
        next()
       })
     } else {
      next()
     }
    }
-
-   Util.checkLogin = (req, res, next) => {
+/*Middleware to check if loggedin exists in res.locals */
+Util.checkLogin = (req, res, next) => {
     if (res.locals.loggedin) {
       next()
     } else {
       req.flash("notice", "Please log in.")
+      return res.redirect("/account/login")
+    }
+   }
+/*Middleware to check if the account type is either 'Employee' or 'Admin' */
+
+Util.checkAccountType = (req, res, next) => {
+    
+    if (res.locals.accountData.account_type == 'Employee' || res.locals.accountData.account_type == 'Admin') {
+      next()
+    } else {
+      req.flash("notice", "You don't have sufficient permissions to access this page.")
       return res.redirect("/account/login")
     }
    }

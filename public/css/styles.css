@@ -573,7 +573,6 @@ form p {
 
 .account-management-list {
   margin: 1rem;
-
 }
 
 .account-management-list li { 
@@ -590,6 +589,33 @@ form p {
 #deleteForm p {
 text-decoration: underline;
 font-weight: bold;  
+}
+
+.welcome-message {
+  margin: 1rem;
+  font-family: 'Kanit', 'sans-serif';
+  font-size: 2rem; 
+}
+
+.management-header {
+  margin: 1rem;
+  font-family: 'Kanit', 'sans-serif';
+  font-size: 1.5rem;
+}
+
+.inventory-management-list {
+  margin: 1rem;
+}
+
+.inventory-management-list li { 
+  margin: 1.5rem;
+  list-style-type: disclosure-closed;
+}
+.inventory-management-list li a {
+  font-family: 'Work Sans', 'sans-serif';
+  font-size: 1.5rem;
+  color: black;
+  padding: 1rem;
 }
 
 /*LARGE VIEW STYLING*/

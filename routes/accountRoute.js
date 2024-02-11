@@ -8,11 +8,19 @@ const regValidate = require("../utilities/account-validation")
 router.get("/",
     utilities.checkLogin,
     utilities.handleErrors(accountController.buildAccountManagement))
+    
+//Default route
+router.get("/management",
+    utilities.checkLogin,
+    utilities.handleErrors(accountController.buildAccountManagement))
 
 //Route to build login view
 router.get("/login", 
     utilities.handleErrors(accountController.buildLogin));
 
+//Route to logout
+router.get("/logout",
+    utilities.handleErrors(accountController.logout))
 //Route to build registration view
 router.get("/registration",
     utilities.handleErrors(accountController.buildRegistration))

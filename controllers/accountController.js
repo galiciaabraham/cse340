@@ -27,11 +27,15 @@ login.buildRegistration = async function (req, res, next) {
 }
 
 login.buildAccountManagement = async function (req, res) {
+  const account_id = parseInt(res.locals.accountData.account_id)
   let nav = await utilities.getNav()
+  const data = await accountModel.getAccountDetailsById(account_id)
+  let name = `${data.account_firstname} ${data.account_lastname}`
   res.render("account/management", {
     errors: null,
     title: "Account Management",
     nav,
+    name
   })
 }
 
@@ -40,7 +44,7 @@ login.buildAccountUpdate = async function (req, res, next) {
   const account_id = parseInt(res.locals.accountData.account_id)
   let nav = await utilities.getNav()
   const data = await accountModel.getAccountDetailsById(account_id)
-  let name = `${data.account_lastname} ${data.account_firstname}`
+  let name = `${data.account_firstname} ${data.account_lastname}`
   res.render("account/update-account", {
     errors: null,
     title: `Update ${name}'s  account information`,
@@ -48,6 +52,7 @@ login.buildAccountUpdate = async function (req, res, next) {
     account_firstname : data.account_firstname,
     account_lastname : data.account_lastname,
     account_email : data.account_email,
+    account_id : account_id
   })
 }
 /*
@@ -107,7 +112,6 @@ login.accountLogin = async function (req, res) {
   const {account_email, account_password } = req.body //gets the email and password from the request body
   
   const accountData = await accountModel.getAccountByEmail(account_email) //Uses the accountModel.getAccountByEmail to retrieve the account information from the database
-
   if(!accountData)//If the account data doesn't exists it sends a flash message and returns to the login view using the res.render function
   {
     req.flash("notice", "Please check your credentials and try again.")
@@ -121,11 +125,22 @@ login.accountLogin = async function (req, res) {
 }
 try {
   if(await bcrypt.compare(account_password, accountData.account_password)) {
+    console.log("ok till here")
     delete accountData.account_password
     const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
     res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000})
     return res.redirect("/account/")
+  } else {
+    req.flash("notice", "Please check your credentials and try again.")
+    res.status(400).render("account/login", {
+    title: "Login",
+    nav,
+    errors: null,
+    account_email,
+  })
+  return 
   }
+  
 } catch (error) {
   return new Error('Access Forbidden')
   }
@@ -135,27 +150,29 @@ try {
 login.accountUpdate = async function (req, res) {
   const {account_id, account_firstname, account_lastname, account_email } = req.body //Gets the values from the post request body
 
-  const updateResult = await invModel.updateAccount (
+  const updateResult = await accountModel.updateAccount (
     account_id, account_firstname, account_lastname, account_email
     ) //uses the invModel.updateInventory method to update the vehicle to the database which returns a fufilled or failed promise 
 
   if (updateResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the account management view 
   {
-    const AccountName = updateResult.account_firstname + " " + updateResult.account_lastname
+    let AccountName = updateResult.account_firstname + " " + updateResult.account_lastname
     req.flash("notice", `The account for ${AccountName} was successfully updated.`)
     res.redirect("/account/")
   } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to theaccount management page.
   {
     let nav = utilities.getNav()
     const data = await accountModel.getAccountDetailsById(account_id)
-    const AccountName = data.account_firstname + " " + data.account_lastname
+    let AccountName = data.account_firstname + " " + data.account_lastname
     req.flash("notice", "Sorry, the update attempt failed, please verify the information and try again. Or contact us for more support cse340@support.com")
     res.status(501).render("account/update-account",{
+      errors: null,
       title: `Update ${AccountName}'s  account information`,
       nav,
       account_firstname : data.account_firstname,
       account_lastname : data.account_lastname,
       account_email : data.account_email,
+      account_id : account_id
     })
   }
 }
@@ -174,15 +191,17 @@ login.passwordUpdate = async function (req, res) {
     const AccountName = data.account_firstname + " " + data.account_lastname
     req.flash("notice", 'Sorry, there was an error processing the update.')
     res.status(501).render("account/update-account",{
+      errors: null,
       title: `Update ${AccountName}'s  account information`,
       nav,
       account_firstname : data.account_firstname,
       account_lastname : data.account_lastname,
       account_email : data.account_email,
-    })
+      account_id : account_id
+      })
   }
 
-  const updateResult = await invModel.passwordUpdate ( hashedPassword, account_id ) //uses the invModel.updateInventory method to update the vehicle to the database which returns a fufilled or failed promise 
+  const updateResult = await accountModel.passwordUpdate ( hashedPassword, account_id ) //uses the invModel.updateInventory method to update the vehicle to the database which returns a fufilled or failed promise 
 
   if (updateResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
   {
@@ -197,13 +216,27 @@ login.passwordUpdate = async function (req, res) {
     const AccountName = data.account_firstname + " " + data.account_lastname
     req.flash("notice", "Sorry, the update attempt failed, please verify the information and try again. Or contact us for more support cse340@support.com")
     res.status(501).render("account/update-account",{
+      errors: null,
       title: `Update ${AccountName}'s  account information`,
       nav,
       account_firstname : data.account_firstname,
       account_lastname : data.account_lastname,
       account_email : data.account_email,
+      account_id : account_id
     })
   }
 }
+
+login.logout = async function (req, res) {
+  req.session.destroy(function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.clearCookie("jwt");
+      res.redirect("/");
+    }
+  })
+}
+
 
   module.exports = login

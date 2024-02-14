@@ -94,4 +94,14 @@ router.post(
     middleware.checkAccountType,
     middleware.handleErrors(invController.deleteInventory))
 
+router.post("/reject/:itemId/:type?",
+    middleware.checkLogin, 
+    middleware.checkAccountTypeAdmin,
+    middleware.handleErrors(invController.rejectUpdate))
+
+router.approve("/approve/:itemId/:type?",
+    middleware.checkLogin, 
+    middleware.checkAccountTypeAdmin,
+    middleware.handleErrors(invController.approveUpdate))
+
 module.exports = router;

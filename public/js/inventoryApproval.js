@@ -7,38 +7,67 @@ approvalList.addEventListener("change", function() {
     let selectedOption = approvalList.value
     console.log(`selected option is: ${selectedOption}`)
     let approvalListURL = `/inv/getApprovalList/?type=${selectedOption}`
-    console.log(approvalListURL)
-    fetch(approvalListURL)
+    if (selectedOption == 'classification') {
+        ajaxRequest(approvalListURL, buildClassApprovalList)
+    } else {
+        ajaxRequest(approvalListURL, buildInvApprovalList)
+    }
+})
+
+async function ajaxRequest(URL, buildFn){
+    fetch(URL)
     .then(function (response) {
         if (response.ok) {
             return response.json()
         } throw Error ("Network request problem")
     }).then(function (data){
-        buildApprovalList(data);
+       buildFn(data);
     }).catch(function (error) {
         console.log('There was a problem:', error.message)
     })
-})
+}
 
-// Build inventory items into HTML table components and inject into DOM 
-function buildApprovalList (data) {
-    let approvalBox = document.querySelector("#approval-box");
+// Build classification items into HTML table components and inject into DOM 
+async function buildClassApprovalList (data) {
+    let approvalBox = document.querySelector(".approval-box");
      // Set up the table labels 
-    let dataList = "<thead>";
-    dataList += '<tr><th>Requested change</th><td>Requested date</td><td>&nbsp;</td><td>&nbsp;</td></tr>'; 
-    dataList += '</thead>'; 
-    // Set up the table body 
-    dataList += '<tbody>'; 
+    let dataList = '<ul class="pending-approval-list">'
     // Iterate over all vehicles in the array and put each in a row 
     data.forEach(function (element) { 
-        console.log(element); 
-        dataList += `<tr><td>${element.change}</td>`; 
-        dataList += `<tr><td>${element.dateOfChange}</td>`; 
-        dataList += `<td><a href='/inv/approve/${element.inv_id}' title='Click to approve'>Approve</a></td>`; 
-        dataList += `<td><a href='/inv/reject/${element.inv_id}' title='Click to reject'>Reject</a></td></tr>`; 
-       }) 
-       dataList += '</tbody>';
-     // Display the contents in the Inventory Management view 
+        dataList += `<li>
+        <span>Classification: </span>
+        <span>Classification ID: ${element.classification_id}</span>
+        <span>Classification Name: ${element.classification_name}</span>
+        <a href='inv/approve/${element.classification_id}/?type=classification'>Approve</a>
+        <a href='inv/reject/${element.classification_id}/?type=classification'>Reject</a>
+        </li>`
+    })
+    dataList += '</ul>'
+     // Display the contents in the Approval Management view 
+    approvalBox.innerHTML = dataList;
+}
+
+// Build inventory items into HTML table components and inject into DOM 
+async function buildInvApprovalList (data) {
+    let approvalBox = document.querySelector(".approval-box");
+     // Set up the table labels 
+    let dataList = '<ul class="pending-approval-list">'
+    // Iterate over all vehicles in the array and put each in a row 
+    data.forEach(function (element) { 
+        dataList += `<li>
+        <span>Inventory Item: </span>
+        <span>Item ID: ${element.inv_id}</span>
+        <span>Vehicle: ${element.inv_year} ${element.inv_make} ${element.inv_model}</span>
+        <span>Description: ${element.inv_description}</span>
+        <span>Image Path: ${element.inv_image}</span>
+        <span>Price: ${element.inv_price}</span>
+        <span>Mileage: ${element.inv_miles}</span>
+        <a href='inv/approve/${element.inv_id}/?type=inventory'>Approve</a>
+        <a href='inv/reject/${element.inv_id}/?type=inventory'>Reject</a>
+        </li>`
+    })
+    dataList += '</ul>'
+     // Display the contents in the Approval Management view 
     approvalBox.innerHTML = dataList;
 }
 

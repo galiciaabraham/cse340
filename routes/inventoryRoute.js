@@ -94,11 +94,13 @@ router.post(
     middleware.checkAccountType,
     middleware.handleErrors(invController.deleteInventory))
 
+//Route to post the rejection request
 router.post("/reject/:itemId/:type?",
     middleware.checkLogin, 
     middleware.checkAccountTypeAdmin,
     middleware.handleErrors(invController.rejectUpdate))
 
+//Route to post the approval request
 router.approve("/approve/:itemId/:type?",
     middleware.checkLogin, 
     middleware.checkAccountTypeAdmin,

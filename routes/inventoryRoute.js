@@ -21,6 +21,12 @@ middleware.checkLogin,
 middleware.checkAccountType,
 middleware.handleErrors(invController.buildManagement))
 
+//Route to build the approval management view
+router.get("/approve",
+middleware.checkLogin, 
+middleware.checkAccountTypeAdmin,
+middleware.handleErrors(invController.buildApproval))
+
 //Route to build the add classification view
 router.get("/add-classification",
 middleware.checkLogin,
@@ -45,9 +51,13 @@ middleware.checkLogin,
 middleware.checkAccountType,
 middleware.handleErrors(invController.buildDeleteInv))
 
-//Route to process the AJAX request
+//Route to process the AJAX request to show the available items to edit
 router.get("/getInventory/:classification_id",
 middleware.handleErrors(invController.getInventoryJSON))
+
+//Route to process the AJAX request to show the added items needing approval
+router.get("/getApprovalList/:type?",
+middleware.handleErrors(invController.getApprovalsList))
 
 //Route to send a post request to the server to add a new classification
 router.post(

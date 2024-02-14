@@ -1,0 +1,16 @@
+<h1 class="approval-page-title"><%= title %></h1>
+<%- messages() %>
+
+<select name="approval-list" id="approval-list">
+    Select what kind of changes you want to approve
+    <option value="" selected>Select an option</option>
+    <option value="classification">Classification</option>
+    <option value="inventory">Inventory Item</option>
+</select>
+
+<div class="approval-box">
+</div>
+
+<noscript>JavaScript must be enabled to use this page</noscript>
+
+<script src="../../js/inventoryApproval.js"></script>

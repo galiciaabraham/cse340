@@ -284,3 +284,39 @@ SET
             '/ms', '/mechanic'),
         '/ford-modelt', '/model-t'),
     '/crown-vic', '/crwn-vic');
+
+--Query to alter the classification table and add the approval columns
+ALTER TABLE public.classification
+	ADD COLUMN IF NOT EXISTS classification_approved boolean DEFAULT false,
+	ADD COLUMN IF NOT EXISTS account_id integer, 
+	ADD COLUMN IF NOT EXISTS classification_approval_date timestamp DEFAULT CURRENT_TIMESTAMP,
+	ADD CONSTRAINT account_id FOREIGN KEY (account_id)
+		REFERENCES public.account (account_id) MATCH SIMPLE
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION 
+		NOT VALID;
+
+-- Query to create index based on the account_id on the classification table
+CREATE INDEX IF NOT EXISTS fki_account_id
+	ON public.classification USING btree
+	(account_id ASC NULLS LAST)
+	TABLESPACE pg_default;
+
+--Query to alter the inventory table and add the approval columns
+ALTER TABLE public.inventory
+	ADD COLUMN IF NOT EXISTS inv_approved boolean DEFAULT false,
+	ADD COLUMN IF NOT EXISTS account_id integer, 
+	ADD COLUMN IF NOT EXISTS inv_approval_date timestamp DEFAULT CURRENT_TIMESTAMP,
+	ADD CONSTRAINT account_id FOREIGN KEY (account_id)
+		REFERENCES public.account (account_id) MATCH SIMPLE
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION 
+		NOT VALID;
+
+-- Query to create index based on the account_id on the classification table
+CREATE INDEX IF NOT EXISTS fki_account_id
+	ON public.inventory USING btree
+	(account_id ASC NULLS LAST)
+	TABLESPACE pg_default;
+
+

@@ -125,7 +125,6 @@ login.accountLogin = async function (req, res) {
 }
 try {
   if(await bcrypt.compare(account_password, accountData.account_password)) {
-    console.log("ok till here")
     delete accountData.account_password
     const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
     res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000})

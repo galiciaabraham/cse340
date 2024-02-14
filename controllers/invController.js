@@ -61,6 +61,17 @@ invCont.buildManagement = async function(req, res,next) {
     })
   }
 
+/*
+Build approval management view
+*/
+invCont.buildApproval = async function(req, res,next) {
+  let nav = await utilities.getNav()
+  res.render("inventory/approval",{
+    title: "Inventory Approval Management",
+    nav,
+  })
+}
+
 /* 
 Build the edit inventory view  
 */
@@ -317,6 +328,7 @@ invCont.addInventory = async function (req, res) {
     })
   }
 }
+
 /*
 Return Inventory by Classification as JSON 
 */
@@ -329,5 +341,28 @@ invCont.getInventoryJSON = async (req, res, next) => {
     next(new Error("No data returned"))
   }
 }
+
+/*
+Return List of items requiring approval.
+*/
+invCont.getApprovalsList = async (req, res, next) => {
+  const type = req.query.type
+  let dbData
+  if (type == 'classification') {
+   dbData = await invModel.getClassificationsWithoutApproval()
+   console.log(dbData)
+  } else if (type == 'inventory') {
+    dbData = await invModel.getInventoryWithoutApproval()
+    console.log(dbData)
+  }
+  if (dbData) {
+    return res.json(dbData)
+  } else {
+    next(new Error("No data returned"))
+  }
+}
+
+
+
 
 module.exports = invCont;

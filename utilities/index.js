@@ -60,6 +60,9 @@ Util.getNav = async function (req, res, next){
     let data = await invModel.getClassifications()
     let list = "<ul>"
     list += '<li><a href="/" title="Home page">Home</a></li>'
+    approvedClassifications = data.rows.filter((row) => {
+       return row.classification_approved == true
+    })
     data.rows.forEach((row) =>{
         list += "<li>"
         list +=
@@ -136,7 +139,10 @@ Util.checkJWTToken = (req, res, next) => {
      next()
     }
    }
-/*Middleware to check if loggedin exists in res.locals */
+
+/*
+Middleware to check if loggedin exists in res.locals 
+*/
 Util.checkLogin = (req, res, next) => {
     if (res.locals.loggedin) {
       next()
@@ -145,12 +151,29 @@ Util.checkLogin = (req, res, next) => {
       return res.redirect("/account/login")
     }
    }
-/*Middleware to check if the account type is either 'Employee' or 'Admin' */
+
+/*
+Middleware to check if the account type is either 'Employee' or 'Admin' 
+*/
 
 Util.checkAccountType = (req, res, next) => {
     
     if (res.locals.accountData.account_type == 'Employee' || res.locals.accountData.account_type == 'Admin') {
       next()
+    } else {
+      req.flash("notice", "You don't have sufficient permissions to access this page.")
+      return res.redirect("/account/login")
+    }
+   }
+
+/*
+Middleware to check if the account type is 'Admin' 
+*/
+
+Util.checkAccountTypeAdmin = (req, res, next) => {
+    
+    if (res.locals.accountData.account_type == 'Admin') {
+        next()
     } else {
       req.flash("notice", "You don't have sufficient permissions to access this page.")
       return res.redirect("/account/login")

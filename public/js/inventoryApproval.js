@@ -6,7 +6,7 @@ let approvalList = document.querySelector("#approval-list")
 approvalList.addEventListener("change", function() {
     let selectedOption = approvalList.value
     console.log(`selected option is: ${selectedOption}`)
-    let approvalListURL = `/inv/getApprovalList/?type=${selectedOption}`
+    let approvalListURL = `/approve/getApprovalList/?type=${selectedOption}`
     console.log(approvalListURL)
     if (selectedOption == 'classification') {
         ajaxRequest(approvalListURL, buildClassApprovalList)
@@ -39,8 +39,8 @@ async function buildClassApprovalList (data) {
         <span>Classification: </span>
         <span>Classification ID: ${element.classification_id}</span>
         <span>Classification Name: ${element.classification_name}</span>
-        <a href='/inv/approve/${element.classification_id}/?type=classification' class='approval-button'>Approve</a>
-        <a href='/inv/reject/${element.classification_id}/?type=classification' class='approval-button'>Reject</a>
+        <a href='/approve/approve/${element.classification_id}/?type=classification' class='approval-button'>Approve</a>
+        <a href='/approve/reject/${element.classification_id}/?type=classification' class='approval-button'>Reject</a>
         </li>`
     })
     dataList += '</ul>'
@@ -63,8 +63,8 @@ async function buildInvApprovalList (data) {
         <span>Image Path: ${element.inv_image}</span>
         <span>Price: ${element.inv_price}</span>
         <span>Mileage: ${element.inv_miles}</span>
-        <a href='/inv/approve/${element.inv_id}/?type=inventory' class='approval-button'>Approve</a>
-        <a href='/inv/reject/${element.inv_id}/?type=inventory' class='approval-button'>Reject</a>
+        <a href='/approve/approve/${element.inv_id}/?type=inventory' class='approval-button'>Approve</a>
+        <a href='/approve/reject/${element.inv_id}/?type=inventory' class='approval-button'>Reject</a>
         </li>`
     })
     dataList += '</ul>'

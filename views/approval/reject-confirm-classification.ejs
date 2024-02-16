@@ -11,7 +11,7 @@
     </ul>
 </div>
 
-<form action="/inv/confirm/reject-class" method="post" id="rejectClassForm">
+<form action="/approve/confirm/reject-class" method="post" id="rejectClassForm">
     <p class="approval-message">Rejecting this item will cause the permanent deletion of this item, click the button once you're sure you want to reject the addition.</p>
         <hr>
     <input type="hidden" name="account_id"<% if(locals.accountData.account_id) { %> value="<%= locals.accountData.account_id %>"

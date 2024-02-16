@@ -106,4 +106,36 @@ router.post(
     middleware.checkAccountType,
     middleware.handleErrors(invController.deleteInventory))
 
+//Route to reject inventory addition using a POST request
+router.post(
+    "/confirm/reject-inv/",
+    middleware.checkLogin,
+    middleware.checkAccountTypeAdmin,
+    middleware.handleErrors(invController.rejectInvUpdate)
+)
+
+//Route to reject classification addition using a POST request
+router.post(
+    "/confirm/reject-class/",
+    middleware.checkLogin,
+    middleware.checkAccountTypeAdmin,
+    middleware.handleErrors(invController.rejectClassUpdate)
+)
+
+//Route to approve inventory addition using a POST request
+router.post(
+    "/confirm/approve-inv/",
+    middleware.checkLogin,
+    middleware.checkAccountTypeAdmin,
+    middleware.handleErrors(invController.approveInvUpdate)
+)
+
+//Route to approve classification addition using a POST request
+router.post(
+    "/confirm/approve-class/",
+    middleware.checkLogin,
+    middleware.checkAccountTypeAdmin,
+    middleware.handleErrors(invController.approveClassUpdate)
+)
+
 module.exports = router;

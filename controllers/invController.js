@@ -452,6 +452,53 @@ invCont.buildApproveUpdate = async function(req, res, next) {
   }  
 }
 
+/* 
+Reject inventory process
+*/
+invCont.rejectInvUpdate = async function (req, res) {
+  const { inv_id } = req.body //Gets the values from the post request body
+
+  const deleteResult = await invModel.deleteInventory ( inv_id ) //uses the invModel.deleteInventory method to delete the vehicle from the database which returns a fufilled or failed promise 
+
+  if (deleteResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+  {
+    req.flash("notice", `The vehicle has been rejected and deleted successfully.`)
+    res.redirect("/inv/approval")
+  } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the delete inventory page.
+  {
+    let nav = utilities.getNav()
+    req.flash("notice", "Sorry, the rejection failed, please verify the information and try again. Or contact us for more support at cse340@support.com")
+    res.render("inventory/approval",{
+      title: "Inventory Approval Management",
+      nav,
+    })
+  }
+}
+
+/* 
+Approve inventory process
+*/
+invCont.approveInvUpdate = async function (req, res) {
+  const { inv_id, account_id } = req.body //Gets the values from the post request body
+
+  const approveResult = await invModel.approveInventory ( inv_id, account_id ) //uses the invModel.deleteInventory method to delete the vehicle from the database which returns a fufilled or failed promise 
+
+  if (approveResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+  {
+    req.flash("notice", `The vehicle has been approved successfully.`)
+    res.redirect("/inv/approval")
+  } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the delete inventory page.
+  {
+    let nav = utilities.getNav()
+    req.flash("notice", "Sorry, the approval failed, please verify the information and try again. Or contact us for more support at cse340@support.com")
+    res.render("inventory/approval",{
+      title: "Inventory Approval Management",
+      nav,
+    })
+  }
+}
+
+
 
 
 

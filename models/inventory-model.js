@@ -158,5 +158,6 @@ async function getInventoryWithoutApproval(){
   }
 }
 
+
 module.exports = {getClassifications, getInventoryByClassificationId, getCarDetailsById, checkExistingClassification, addClassification, getClassificationName, addInventory, updateInventory, deleteInventory, getClassificationsWithoutApproval, getInventoryWithoutApproval, getClassificationById }
 

@@ -7,6 +7,7 @@ approvalList.addEventListener("change", function() {
     let selectedOption = approvalList.value
     console.log(`selected option is: ${selectedOption}`)
     let approvalListURL = `/inv/getApprovalList/?type=${selectedOption}`
+    console.log(approvalListURL)
     if (selectedOption == 'classification') {
         ajaxRequest(approvalListURL, buildClassApprovalList)
     } else {
@@ -38,8 +39,8 @@ async function buildClassApprovalList (data) {
         <span>Classification: </span>
         <span>Classification ID: ${element.classification_id}</span>
         <span>Classification Name: ${element.classification_name}</span>
-        <a href='inv/approve/${element.classification_id}/?type=classification'>Approve</a>
-        <a href='inv/reject/${element.classification_id}/?type=classification'>Reject</a>
+        <a href='/inv/approve/${element.classification_id}/?type=classification' class='approval-button'>Approve</a>
+        <a href='/inv/reject/${element.classification_id}/?type=classification' class='approval-button'>Reject</a>
         </li>`
     })
     dataList += '</ul>'
@@ -62,8 +63,8 @@ async function buildInvApprovalList (data) {
         <span>Image Path: ${element.inv_image}</span>
         <span>Price: ${element.inv_price}</span>
         <span>Mileage: ${element.inv_miles}</span>
-        <a href='inv/approve/${element.inv_id}/?type=inventory'>Approve</a>
-        <a href='inv/reject/${element.inv_id}/?type=inventory'>Reject</a>
+        <a href='/inv/approve/${element.inv_id}/?type=inventory' class='approval-button'>Approve</a>
+        <a href='/inv/reject/${element.inv_id}/?type=inventory' class='approval-button'>Reject</a>
         </li>`
     })
     dataList += '</ul>'
@@ -71,3 +72,10 @@ async function buildInvApprovalList (data) {
     approvalBox.innerHTML = dataList;
 }
 
+async function hideClickedItem (parentElement) {
+    const actionButton = document.getElementsByClassName('approval-button')
+    actionButton.addEventListener("click", function () {
+        parentElement.parentElement.remove()
+    })
+
+}

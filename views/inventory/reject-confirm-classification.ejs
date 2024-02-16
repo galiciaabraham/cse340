@@ -1,0 +1,23 @@
+<h1 class="approval-page-title"><%= title %></h1>
+<%- messages() %>
+
+<div class="approval-box">
+    <ul class="pending-approval-list">
+        <li>
+            <span>Classification: </span>
+            <span>Classification ID: <%= locals.classification_id %></span>
+            <span>Classification Name: <%= locals.classification_name %> </span>
+        </li>
+    </ul>
+</div>
+
+<form action="/inv/confirm/reject-class" method="post" id="rejectClassForm">
+    <p class="approval-message">Rejecting this item will cause the permanent deletion of this item, click the button once you're sure you want to reject the addition</p>
+        <hr>
+    <input type="hidden" name="account_id"<% if(locals.accountData.account_id) { %> value="<%= locals.accountData.account_id %>"
+        <% } %>>
+    <input type="hidden" name="classification_id"
+<% if(locals.classification_id) { %> value="<%= locals.classification_id %>"
+<% } %>>
+<button type="submit" class="reject-button" >Confirm Rejection</button>
+</form>

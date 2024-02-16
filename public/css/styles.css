@@ -702,6 +702,25 @@ fieldset {
     margin: 10px;
     grid-column: 2/3;
 }
+
+.approval-message {
+  color: black;
+  font-weight: 700;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.approve-button, .reject-button {
+  display: block;
+  margin: 0 auto;
+  height: 2rem;
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  border: 2px solid black;
+}
 /*LARGE VIEW STYLING*/
 
 @media screen and (min-width: 700px) {
@@ -793,6 +812,11 @@ body {
 .pending-approval-list li a:hover {
   color: black;
   background-color: white;
+}
+
+.approve-button:hover, .reject-button:hover {
+  background-color: white;
+  color: black;
 }
 
 }

@@ -72,6 +72,17 @@ invCont.buildApproval = async function(req, res,next) {
   })
 }
 
+/*
+Build management view
+*/
+invCont.buildApproval = async function(req, res,next) {
+  let nav = await utilities.getNav()
+  res.render("inventory/approval-management",{
+    title: "Inventory Approval Management",
+    nav,
+  })
+}
+
 /* 
 Build the edit inventory view  
 */
@@ -350,16 +361,95 @@ invCont.getApprovalsList = async (req, res, next) => {
   let dbData
   if (type == 'classification') {
    dbData = await invModel.getClassificationsWithoutApproval()
-   console.log(dbData)
   } else if (type == 'inventory') {
     dbData = await invModel.getInventoryWithoutApproval()
-    console.log(dbData)
   }
   if (dbData) {
     return res.json(dbData)
   } else {
     next(new Error("No data returned"))
   }
+
+}
+
+/* 
+Build the reject item view  
+*/
+invCont.buildRejectUpdate = async function(req, res, next) {
+  const item_id = parseInt(req.params.itemId)
+  const itemType = req.query.type
+  
+  let nav = await utilities.getNav()
+  let data
+  let name
+  if (itemType == 'classification') { 
+    data = await invModel.getClassificationById(item_id)
+    name = `${data[0].classification_name}`
+    res.render("inventory/reject-confirm-classification", {
+      title: `Reject new classification: ${name}`,
+      errors: null,
+      nav,
+      classification_id: data[0].classification_id,
+      classification_name: data[0].classification_name
+    })
+  } else if (itemType == 'inventory') {
+   data = await invModel.getCarDetailsById(item_id)
+  name = `${data[0].inv_make} ${data[0].inv_model}`
+   res.render("inventory/reject-confirm-inventory",{
+    title: `Reject new inventory item ${name}`,
+    nav,
+    errors: null,
+    inv_id: data[0].inv_id,
+    inv_year: data[0].inv_year,
+    inv_make: data[0].inv_make,
+    inv_model: data[0].inv_model,
+    inv_description: data[0].inv_description,
+    inv_image: data[0].inv_image,
+    inv_price: data[0].inv_price,
+    inv_miles: data[0].inv_miles,
+    inv_color: data[0].inv_color,
+  })
+  }  
+}
+
+/* 
+Build the reject item view  
+*/
+invCont.buildApproveUpdate = async function(req, res, next) {
+  const item_id = parseInt(req.params.itemId)
+  const itemType = req.query.type
+  
+  let nav = await utilities.getNav()
+  let data
+  let name
+  if (itemType == 'classification') { 
+    data = await invModel.getClassificationById(item_id)
+    name = `${data[0].classification_name}`
+    res.render("inventory/approve-confirm-classification", {
+      title: `Approve new classification: ${name}`,
+      errors: null,
+      nav,
+      classification_id: data[0].classification_id,
+      classification_name: data[0].classification_name
+    })
+  } else if (itemType == 'inventory') {
+   data = await invModel.getCarDetailsById(item_id)
+  name = `${data[0].inv_make} ${data[0].inv_model}`
+   res.render("inventory/approve-confirm-inventory",{
+    title: `Approve new inventory item: ${name}`,
+    nav,
+    errors: null,
+    inv_id: data[0].inv_id,
+    inv_year: data[0].inv_year,
+    inv_make: data[0].inv_make,
+    inv_model: data[0].inv_model,
+    inv_description: data[0].inv_description,
+    inv_image: data[0].inv_image,
+    inv_price: data[0].inv_price,
+    inv_miles: data[0].inv_miles,
+    inv_color: data[0].inv_color,
+  })
+  }  
 }
 
 

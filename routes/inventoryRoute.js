@@ -21,12 +21,6 @@ middleware.checkLogin,
 middleware.checkAccountType,
 middleware.handleErrors(invController.buildManagement))
 
-//Route to build the approval management view
-router.get("/approve",
-middleware.checkLogin, 
-middleware.checkAccountTypeAdmin,
-middleware.handleErrors(invController.buildApproval))
-
 //Route to build the add classification view
 router.get("/add-classification",
 middleware.checkLogin,
@@ -50,6 +44,24 @@ router.get("/delete/:invId",
 middleware.checkLogin,
 middleware.checkAccountType,
 middleware.handleErrors(invController.buildDeleteInv))
+
+//Route to build the approval management view
+router.get("/approval",
+middleware.checkLogin, 
+middleware.checkAccountTypeAdmin,
+middleware.handleErrors(invController.buildApproval))
+
+//Route to get the confirm rejection view
+router.get("/reject/:itemId/:type?",
+    middleware.checkLogin, 
+    middleware.checkAccountTypeAdmin,
+    middleware.handleErrors(invController.buildRejectUpdate))
+
+//Route to post the confirm approval view
+router.get("/approve/:itemId/:type?",
+    middleware.checkLogin, 
+    middleware.checkAccountTypeAdmin,
+    middleware.handleErrors(invController.buildApproveUpdate))
 
 //Route to process the AJAX request to show the available items to edit
 router.get("/getInventory/:classification_id",
@@ -93,17 +105,5 @@ router.post(
     middleware.checkLogin,
     middleware.checkAccountType,
     middleware.handleErrors(invController.deleteInventory))
-
-//Route to post the rejection request
-router.post("/reject/:itemId/:type?",
-    middleware.checkLogin, 
-    middleware.checkAccountTypeAdmin,
-    middleware.handleErrors(invController.rejectUpdate))
-
-//Route to post the approval request
-router.approve("/approve/:itemId/:type?",
-    middleware.checkLogin, 
-    middleware.checkAccountTypeAdmin,
-    middleware.handleErrors(invController.approveUpdate))
 
 module.exports = router;

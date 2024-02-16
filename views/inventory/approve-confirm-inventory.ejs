@@ -1,0 +1,27 @@
+<h1 class="approval-page-title"><%= title %></h1>
+<%- messages() %>
+
+<div class="approval-box">
+    <ul class="pending-approval-list">
+        <li>
+            <span>Inventory Item: </span>
+            <span>Item ID: <%= locals.inv_id %></span>
+            <span>Vehicle: <%= locals.inv_year %> <%= locals.inv_make %> <%= locals.inv_model %></span>
+            <span>Description: <%= locals.inv_description %> </span>
+            <span>Image Path: <%= locals.inv_image %> </span>
+            <span>Price: <%= locals.inv_price %> </span>
+            <span>Mileage: <%= locals.inv_miles %></span>
+        </li>
+    </ul>
+</div>
+
+<form action="/inv/confirm/approve-inv" method="post" id="approveInvForm">
+    <p class="approval-message">Approving this item will cause the addition of the item to the client view, click the button once you're sure you want to approve the addition</p>
+        <hr>
+    <input type="hidden" name="account_id"<% if(locals.accountData.account_id) { %> value="<%= locals.accountData.account_id %>"
+        <% } %>>
+    <input type="hidden" name="inv_id"
+<% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+<% } %>>
+<button type="submit" class="approve-button" >Confirm Approval</button>
+</form>

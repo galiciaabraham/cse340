@@ -7,11 +7,26 @@ async function getClassifications(){
     return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
 }
 
+/*
+Get classification details by Id
+ */
+async function getClassificationById(classification_id) {
+  try {
+    const sql = "SELECT * FROM classification WHERE classification_id = $1"
+    const classification = await pool.query(sql, [classification_id])
+    return classification.rows
+  } catch (error) {
+    return error.message
+  }
+}
+
+/* Get the classification name by classification_id */
 async function getClassificationName(classification_id) {
     const classificationName = await pool.query(`SELECT classification_name FROM public.classification WHERE classification_id = $1`,[classification_id])
     return classificationName.rows[0].classification_name
 }
 /* 
+
  Get all inventory items and classification_name by classification_id
 */
 async function getInventoryByClassificationId(classification_id) {
@@ -143,5 +158,5 @@ async function getInventoryWithoutApproval(){
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getCarDetailsById, checkExistingClassification, addClassification, getClassificationName, addInventory, updateInventory, deleteInventory, getClassificationsWithoutApproval, getInventoryWithoutApproval }
+module.exports = {getClassifications, getInventoryByClassificationId, getCarDetailsById, checkExistingClassification, addClassification, getClassificationName, addInventory, updateInventory, deleteInventory, getClassificationsWithoutApproval, getInventoryWithoutApproval, getClassificationById }
 

@@ -134,8 +134,21 @@ async function deleteInventory( inv_id ){
   }
 }
 
+/* 
+Delete classification from the classificiation table in the database
+*/
+async function deleteClassification( classification_id ){
+  try {
+    const sql = "DELETE FROM public.classification WHERE  classification_id = $1";
+    const data = await pool.query(sql, [classification_id])
+    return data
+  } catch (error) {
+    console.error("Delete inventory model error: " + error)
+  }
+}
 
 
 
-module.exports = {getClassifications, getInventoryByClassificationId, getCarDetailsById, checkExistingClassification, addClassification, getClassificationName, addInventory, updateInventory, deleteInventory, getClassificationById }
+
+module.exports = {getClassifications, getInventoryByClassificationId, getCarDetailsById, checkExistingClassification, addClassification, getClassificationName, addInventory, updateInventory, deleteInventory, getClassificationById, deleteClassification }
 

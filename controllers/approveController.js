@@ -128,7 +128,7 @@ approveCont.getApprovalsList = async (req, res, next) => {
       res.redirect("/approve/")
     } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the delete inventory page.
     {
-      let nav = utilities.getNav()
+      let nav = await utilities.getNav()
       req.flash("notice", "Sorry, the rejection failed, please verify the information and try again. Or contact us for more support at cse340@support.com")
       res.render("approval/approval-management",{
         title: "Inventory Approval Management",
@@ -148,12 +148,57 @@ approveCont.getApprovalsList = async (req, res, next) => {
     if (approveResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
     {
       req.flash("notice", `The vehicle has been approved successfully.`)
-      res.redirect("/inv/approval")
+      res.redirect("/approve/")
     } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the delete inventory page.
     {
-      let nav = utilities.getNav()
+      let nav = await utilities.getNav()
       req.flash("notice", "Sorry, the approval failed, please verify the information and try again. Or contact us for more support at cse340@support.com")
-      res.render("inventory/approval",{
+      res.render("approval/approval-management",{
+        title: "Inventory Approval Management",
+        nav,
+      })
+    }
+  }
+
+  /* 
+  Reject inventory process
+  */
+  approveCont.rejectClassUpdate = async function (req, res) {
+    const { classification_id } = req.body //Gets the values from the post request body
+  
+    const deleteResult = await invModel.deleteClassification ( classification_id ) //uses the invModel.deleteInventory method to delete the vehicle from the database which returns a fufilled or failed promise 
+  
+    if (deleteResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+    {
+      req.flash("notice", `The classification has been rejected and deleted successfully.`)
+      res.redirect("/approve/")
+    } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the delete inventory page.
+    {
+      let nav = await tilities.getNav()
+      req.flash("notice", "Sorry, the rejection failed, please verify the information and try again. Or contact us for more support at cse340@support.com")
+      res.render("approval/approval-management",{
+        title: "Inventory Approval Management",
+        nav,
+      })
+    }
+  }
+  
+  /* 
+  Approve inventory process
+  */
+  approveCont.approveClassUpdate = async function (req, res) {
+    const { classification_id, account_id } = req.body //Gets the values from the post request body
+    const approveResult = await approveModel.approveClassification (classification_id, account_id ) //uses the approveModel.deleteInventory method to delete the vehicle from the database which returns a fufilled or failed promise 
+    
+    if (approveResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+    {
+      req.flash("notice", `The classification has been approved successfully.`)
+      res.redirect("/approve/")
+    } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the delete inventory page.
+    {
+      let nav = await utilities.getNav()
+      req.flash("notice", "Sorry, the approval failed, please verify the information and try again. Or contact us for more support at cse340@support.com")
+      res.render("approval/approval-management",{
         title: "Inventory Approval Management",
         nav,
       })

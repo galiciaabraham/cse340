@@ -27,7 +27,7 @@ async function getClassificationsWithoutApproval(){
   /*Approve the inventory by modifying the inventory_approved, account_id and inv_approved_date in the inventory table*/
   async function approveInventory(inv_id, account_id){
     try {
-        const sql = "UPDATE public.inventory SET inv_approved = true, account_id = $1, inv_approved_date = CURRENT_TIMESTAMP WHERE inv_id = $2 RETURNING *"
+        const sql = "UPDATE public.inventory SET inv_approved = true, account_id = $1, inv_approval_date = CURRENT_TIMESTAMP WHERE inv_id = $2 RETURNING *"
         return await pool.query(sql, [account_id, inv_id])  
     } catch (error) {
         console.error("model error: " + error)
@@ -41,7 +41,7 @@ async function getClassificationsWithoutApproval(){
       
       const data = await pool.query(sql, [parseInt(account_id), parseInt(classification_id)]);
       return data
-      
+
     } catch (error) {
         console.error("model error: " + error)
     }     

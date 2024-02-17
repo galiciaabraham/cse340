@@ -188,8 +188,9 @@ approveCont.getApprovalsList = async (req, res, next) => {
   */
   approveCont.approveClassUpdate = async function (req, res) {
     const { classification_id, account_id } = req.body //Gets the values from the post request body
+
     const approveResult = await approveModel.approveClassification (classification_id, account_id ) //uses the approveModel.deleteInventory method to delete the vehicle from the database which returns a fufilled or failed promise 
-    
+
     if (approveResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
     {
       req.flash("notice", `The classification has been approved successfully.`)

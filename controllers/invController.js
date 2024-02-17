@@ -220,8 +220,7 @@ invCont.addClassification = async function (req, res) {
     const addClassResult = await invModel.addClassification(
       classification_name
       ) //uses the invModel.addClassification method to add the new classification to the database which returns a fufilled or failed promise
-  
-    if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+          if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
     {
       nav = await utilities.getNav()
       const classificationSelect = await utilities.buildClassificationList()

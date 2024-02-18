@@ -6,7 +6,7 @@
 }
 /* Shared styling*/
 
-/*Header small view*/
+/*Header styling*/
 
 #top-header {
   display: grid;
@@ -29,7 +29,7 @@
   margin: 1rem;
 }
 
-/*Navigation small view*/
+/*Navigation bar styling*/
 
 nav ul{
   display: flex;
@@ -441,15 +441,6 @@ form p {
   color: white;
 }
 
-#ShowPwdBtn {
-  padding: 5px;
-  font-size: 1rem;
-  font-family: 'Work Sans', 'sans-serif';
-  background-color: white;
-  color: black;
-  border-radius: 5px;
-  border: 2px solid black;
-}
 /* Inventory Management view*/
 .management-page-title {
   margin: 1rem;
@@ -787,10 +778,6 @@ body {
   width: 50%;
   min-width: 300px;
   margin:  auto;
-}
-#ShowPwdBtn:hover {
-  background-color: black;
-  color: white;
 }
 
 .add-class-button:hover {

@@ -255,14 +255,14 @@ Add inventory process
 invCont.addInventory = async function (req, res) {
   const {classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body //Gets the values from the post request body
 
-  const addInvResult = await invModel.addInventory (
+  const addClassResult = await invModel.addInventory (
     classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color
     ) //uses the invModel.addInventory method to add the vehicle to the database which returns a fufilled or failed promise 
 
-  if (addInvResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+  if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
   {
     let nav = await utilities.getNav()
-    const classificationSelect = await utilities.buildClassificationList(classification_id = "default")
+    const classificationSelect = await utilities.buildClassificationList("default")
     req.flash(
       "notice",
       `Congratulations, you successfully requested the addition of the new Vehicle "${inv_year} ${inv_make} ${inv_model}".`)
@@ -284,6 +284,7 @@ invCont.addInventory = async function (req, res) {
     })
   }
 }
+
 
 /*
 Return Inventory by Classification as JSON 

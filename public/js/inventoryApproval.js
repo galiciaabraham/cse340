@@ -58,6 +58,7 @@ async function buildInvApprovalList (data) {
         dataList += `<li>
         <span>Inventory Item: </span>
         <span>Item ID: ${element.inv_id}</span>
+        <span>Classification ID: ${element.classification_id}</span>
         <span>Vehicle: ${element.inv_year} ${element.inv_make} ${element.inv_model}</span>
         <span>Description: ${element.inv_description}</span>
         <span>Image Path: ${element.inv_image}</span>

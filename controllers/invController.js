@@ -9,9 +9,12 @@ Build inventory by classification view
 invCont.buildByClassificationId = async function (req, res, next) {
     const classification_id = req.params.classificationId
     const data = await invModel.getInventoryByClassificationId(classification_id)
+    let approvedVehicles = data.filter((row) => {
+      return row.inv_approved == true
+   })
     let grid
-    if (data.length >= 1){
-        grid = await utilities.buildClassificationGrid(data)
+    if (approvedVehicles.length >= 1){
+        grid = await utilities.buildClassificationGrid(approvedVehicles)
         let nav = await utilities.getNav()
         const className = data[0].classification_name
         res.render("./inventory/classification", {
@@ -53,7 +56,7 @@ Build inventory management view
 invCont.buildManagement = async function(req, res,next) {
     let nav = await utilities.getNav()
     // req.flash("notice", "This is a test message for the management page")
-    const classificationSelect = await utilities.buildClassificationList()
+    const classificationSelect = await utilities.buildClassificationList(classification_id = "default")
     res.render("inventory/management",{
       title: "Inventory Management",
       nav,
@@ -201,7 +204,7 @@ Build the add inventory view
 */
 invCont.buildAddInv = async function(req, res, next) { 
   let nav = await utilities.getNav()
-  let select = await utilities.buildClassificationList()
+  let select = await utilities.buildClassificationList(classification_id = "default")
   res.render("inventory/add-inventory",{
     title: "Add Inventory",
     nav,
@@ -220,10 +223,11 @@ invCont.addClassification = async function (req, res) {
     const addClassResult = await invModel.addClassification(
       classification_name
       ) //uses the invModel.addClassification method to add the new classification to the database which returns a fufilled or failed promise
+      console.log(addClassResult)
           if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
     {
       nav = await utilities.getNav()
-      const classificationSelect = await utilities.buildClassificationList()
+      const classificationSelect = await utilities.buildClassificationList(classification_id = "default")
       req.flash(
         "notice",
         `Congratulations, you successfully added the new classification "${classification_name}".`)
@@ -258,7 +262,7 @@ invCont.addInventory = async function (req, res) {
   if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
   {
     let nav = await utilities.getNav()
-    const classificationSelect = await utilities.buildClassificationList()
+    const classificationSelect = await utilities.buildClassificationList(classification_id = "default")
     req.flash(
       "notice",
       `Congratulations, you successfully added the new Vehicle "${inv_year} ${inv_make} ${inv_model}".`)
@@ -294,7 +298,7 @@ invCont.addInventory = async function (req, res) {
   if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
   {
     let nav = await utilities.getNav()
-    const classificationSelect = await utilities.buildClassificationList()
+    const classificationSelect = await utilities.buildClassificationList(classification_id = "default")
     req.flash(
       "notice",
       `Congratulations, you successfully added the new Vehicle "${inv_year} ${inv_make} ${inv_model}".`)

@@ -102,6 +102,7 @@ approveCont.getApprovalsList = async (req, res, next) => {
       nav,
       errors: null,
       inv_id: data[0].inv_id,
+      classification_id: data[0].classification_id,
       inv_year: data[0].inv_year,
       inv_make: data[0].inv_make,
       inv_model: data[0].inv_model,

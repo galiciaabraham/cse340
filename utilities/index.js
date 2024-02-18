@@ -60,10 +60,11 @@ Util.getNav = async function (req, res, next){
     let data = await invModel.getClassifications()
     let list = "<ul>"
     list += '<li><a href="/" title="Home page">Home</a></li>'
-    approvedClassifications = data.rows.filter((row) => {
+
+    let approvedClassifications = data.rows.filter((row) => {
        return row.classification_approved == true
     })
-    data.rows.forEach((row) =>{
+    approvedClassifications.forEach((row) =>{
         list += "<li>"
         list +=
         '<a href="/inv/type/' +
@@ -78,36 +79,24 @@ Util.getNav = async function (req, res, next){
     list += "</ul>"
     return list
 }
-/* 
-Show password button function
-*/
-Util.passwordButton = async function () {
-    const pswdBtn = document.querySelector("#ShowPdwdBtn");
-    pswdBtn.addEventListener("click", function() {
-    const pswdInput = document.getElementById("pword");
-    const type = pswdInput.getAttribute("type");
-    if (type == "password") {
-        pswdInput.setAttribute("type", "text");
-        pswdBtn.innerHTML = "Hide Password";
-    } else {
-        pswdInput.setAttribute("type", "password");
-        pswdBtn.innerHTML = "Show Password";
-    }
-});
-}
 
 /* 
 Get the classification names to build the options dinamically for the add Inventory form 
 */
 Util.buildClassificationList = async function(classification_id = "1") {
+
     const classificationData = await invModel.getClassifications()
+    let approvedClassifications = classificationData.rows.filter((row) => {
+        return row.classification_approved == true
+     })
     let options = `<select name="classification_id" id="classification_id" class="classificationList" required ><option value="">Classification</option>`
-    const classInner = [classificationData.rows]
-    classInner[0].forEach(classification => {
+    approvedClassifications.forEach(classification => {
         // check if the current option matches the last selected classification_id
         let selected = ""
         if (classification.classification_id == classification_id) {
             selected = "selected" 
+        } else if (classification_id == "default") {
+            selected = ""
         }
         options += `<option value= ${classification.classification_id} ${selected}>${classification.classification_name}</option>`
     })

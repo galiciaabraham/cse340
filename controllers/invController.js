@@ -227,7 +227,7 @@ invCont.addClassification = async function (req, res) {
           if (addClassResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
     {
       nav = await utilities.getNav()
-      const classificationSelect = await utilities.buildClassificationList(classification_id = "default")
+      const classificationSelect = await utilities.buildClassificationList("default")
       req.flash(
         "notice",
         `Congratulations, you successfully requested the addition of the new classification "${classification_name}".`)

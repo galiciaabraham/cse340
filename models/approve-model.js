@@ -34,6 +34,16 @@ async function getClassificationsWithoutApproval(){
     }     
   }
 
+  /*Approve All the inventory by modifying the inventory_approved, account_id and inv_approved_date in the inventory table*/
+    async function approveAllInventory(account_id){
+      try {
+          const sql = "UPDATE public.inventory SET inv_approved = true, account_id = $1, inv_approval_date = CURRENT_TIMESTAMP WHERE inv_approved = false RETURNING *"
+          return await pool.query(sql, [account_id])  
+      } catch (error) {
+          console.error("model error: " + error)
+      }     
+    }
+
   /*Approve the classification by modifying the classification_approved, account_id and classification_approval_date in the inventory table*/
   async function approveClassification(classification_id, account_id){
     try {
@@ -47,4 +57,4 @@ async function getClassificationsWithoutApproval(){
     }     
   }
 
-  module.exports = { getClassificationsWithoutApproval, getInventoryWithoutApproval, approveInventory, approveClassification}
+  module.exports = { getClassificationsWithoutApproval, getInventoryWithoutApproval, approveInventory, approveClassification, approveAllInventory}

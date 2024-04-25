@@ -694,6 +694,17 @@ fieldset {
     grid-column: 2/3;
 }
 
+.approve-all-box {
+  display: block;
+  margin: 0 auto;
+}
+
+.approve-all-link {
+  font-size: 1rem;
+  font-family: 'Work Sans', 'sans-serif';
+  color: black;
+}
+
 .approval-message {
   color: black;
   font-weight: 700;

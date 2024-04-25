@@ -1,0 +1,16 @@
+<h1 class="approval-page-title"><%= title %></h1>
+<%- messages() %>
+
+<div class="approval-box">
+</div>
+
+<form action="/approve/confirm/approve-all-inv" method="post" id="approveInvForm">
+    <p class="approval-message">Approving this  will cause the addition of all inventory to the client view, click the button once you're sure you want to approve the addition.</p>
+        <hr>
+    <input type="hidden" name="account_id"<% if(locals.accountData.account_id) { %> value="<%= locals.accountData.account_id %>"
+        <% } %>>
+    <input type="hidden" name="inv_id"
+<% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+<% } %>>
+<button type="submit" class="approve-button" >Confirm Approval</button>
+</form>

@@ -60,7 +60,6 @@ Util.getNav = async function (req, res, next){
     let data = await invModel.getClassifications()
     let list = "<ul>"
     list += '<li><a href="/" title="Home page">Home</a></li>'
-
     let approvedClassifications = data.rows.filter((row) => {
        return row.classification_approved == true
     })

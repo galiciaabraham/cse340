@@ -68,7 +68,9 @@ async function buildInvApprovalList (data) {
         <a href='/approve/reject/${element.inv_id}/?type=inventory' class='approval-button'>Reject</a>
         </li>`
     })
-    dataList += '</ul>'
+    dataList += `</ul>
+    <div class="approve-all-box"> <a href="/approve/approve/1/?type=allinventory" class="approve-all-link">Approve All inventory not already approved instead</a></div>
+    `
      // Display the contents in the Approval Management view 
     approvalBox.innerHTML = dataList;
 }

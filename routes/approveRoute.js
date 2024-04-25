@@ -55,6 +55,14 @@ router.post(
     utilities.handleErrors(approveController.approveInvUpdate)
 )
 
+//Route to approve inventory addition using a POST request
+router.post(
+    "/confirm/approve-all-inv/",
+    utilities.checkLogin,
+    utilities.checkAccountTypeAdmin,
+    utilities.handleErrors(approveController.approveAllInv)
+)
+
 //Route to approve classification addition using a POST request
 router.post(
     "/confirm/approve-class/",

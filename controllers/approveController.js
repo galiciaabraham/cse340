@@ -112,7 +112,13 @@ approveCont.getApprovalsList = async (req, res, next) => {
       inv_miles: data[0].inv_miles,
       inv_color: data[0].inv_color,
     })
-    }  
+    } else if (itemType =='allinventory') {
+      res.render("approval/approve-confirm-all",{
+        title: `Approve all inventory`,
+        nav,
+        errors: null
+      })
+    }
   }
   
   /* 
@@ -131,6 +137,26 @@ approveCont.getApprovalsList = async (req, res, next) => {
     {
       let nav = await utilities.getNav()
       req.flash("notice", "Sorry, the rejection failed, please verify the information and try again. Or contact us for more support at cse340@support.com")
+      res.render("approval/approval-management",{
+        title: "Inventory Approval Management",
+        nav,
+      })
+    }
+  }
+/*Approve all the inventory that's not already approved*/
+  approveCont.approveAllInv = async function (req, res) {
+    const {  account_id } = req.body //Gets the values from the post request body
+  
+    const approveResult = await approveModel.approveAllInventory( account_id ) //uses the approveModel.deleteInventory method to delete the vehicle from the database which returns a fufilled or failed promise 
+  
+    if (approveResult)  //if the promise was fufilled succesfully then creates a success flash message and uses the res.render function to return to the inventory management view 
+    {
+      req.flash("notice", `The vehicles have been approved successfully.`)
+      res.redirect("/approve/")
+    } else //If the promise fulfilled with a failure it creates a failure message and uses res.render fn to return to the delete inventory page.
+    {
+      let nav = await utilities.getNav()
+      req.flash("notice", "Sorry, the approval failed, please verify the information and try again. Or contact us for more support at cse340@support.com")
       res.render("approval/approval-management",{
         title: "Inventory Approval Management",
         nav,
